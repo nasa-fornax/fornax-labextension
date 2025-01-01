@@ -1,0 +1,23 @@
+{
+  "title": "Fornax Main Menu",
+  "description": "Main Menu For Fornax",
+  "jupyter.lab.menus": {
+    "main": [
+      {
+        "id": "jp-fornax-mainmenu",
+        "label": "Fornax",
+        "rank": 120,
+        "items": [
+          {
+            "command": "fornax:cpanel",
+            "args": {
+              "origin": "cpanel from the menu"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "additionalProperties": false,
+  "type": "object"
+}
