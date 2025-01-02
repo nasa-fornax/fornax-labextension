@@ -13,6 +13,12 @@
             "args": {
               "origin": "cpanel from the menu"
             }
+          },
+          {
+            "command": "fornax:logout",
+            "args": {
+              "origin": "logout from the menu"
+            }
           }
         ]
       }

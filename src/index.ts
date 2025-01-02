@@ -5,6 +5,43 @@ import {
 
 import { ICommandPalette, showDialog, Dialog} from '@jupyterlab/apputils';
 
+interface NavCommandOptions {
+  id: string,
+  label: string,
+  diag_body: string,
+  navlink: string,
+}
+
+function CreateNavCommand(options: NavCommandOptions, palette: ICommandPalette, app: JupyterFrontEnd): string {
+  const category = 'Fornax Commands';
+
+  // Navigate to the Hub Control Panel
+  const command = options.id;
+  app.commands.addCommand(command, {
+    label: options.label,
+    execute: async (args: any) => {
+      const result = await showDialog({
+        title: 'Confirmation',
+        body: options.diag_body,
+        buttons: [
+          Dialog.cancelButton(),
+          Dialog.okButton({ label: 'Yes' })
+        ]
+      });
+      const orig = args['origin'];
+      if (result.button.accept) {
+        console.log(`Navigating to ${options.navlink}. Origin: ${orig}`);
+        //window.location.href = options.navlink;
+      }
+    }
+  });
+  // the this command to the command palette
+  palette.addItem({command: command, category,
+    args: { origin: 'From the palette' }
+  });
+
+  return command;
+}
 
 /**
  * Initialization data for the fornax-labextension extension.
@@ -16,35 +53,24 @@ const plugin: JupyterFrontEndPlugin<void> = {
   requires: [ICommandPalette],
   activate: (app: JupyterFrontEnd, palette: ICommandPalette) => {
     console.log('JupyterLab extension fornax-labextension is activated!');
-    
-    // Category of the commands
-    const category = 'Fornax Commands';
-    
-    // Navigate to the Hub Control Panel
-    const cpanel_command = 'fornax:cpanel';
-    app.commands.addCommand(cpanel_command, {
-      label: 'Server Control',
-      execute: async () => {
-        const result = await showDialog({
-          title: 'Confirmation',
-          body: 'Are you sure you want to navigate to the control panel?',
-          buttons: [
-            Dialog.cancelButton(),
-            Dialog.okButton({ label: 'Yes' })
-          ]
-        });
 
-        if (result.button.accept) {
-          console.log('Navigating to Control panel');
-          // Place the actual logic or command you want to run here
-          window.location.href = '/hub/controlpanel';
-        } else {
-          console.log('Navigation canceled');
-        }
+    const nav_commands: NavCommandOptions[] = [
+      {
+        id: 'fornax:cpanel',
+        label: 'Server Control',
+        diag_body: 'Are you sure you want to navigate to the control panel?',
+        navlink: '/hub/controlpanel'
+      },
+      {
+        id: 'fornax:logout',
+        label: 'Logout',
+        diag_body: 'Are you sure you want to logout?',
+        navlink: '/hub/logout'
       }
-    });
-    palette.addItem({command: cpanel_command, category,
-      args: { origin: 'cpanel from the palette' }
+    ];
+
+    nav_commands.forEach(commandOptions => {
+      CreateNavCommand(commandOptions, palette, app);
     });
   }
 };
