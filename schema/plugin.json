@@ -9,15 +9,23 @@
         "rank": 120,
         "items": [
           {
-            "command": "fornax:cpanel",
-            "args": {
-              "origin": "cpanel from the menu"
-            }
+            "command": "fornax:cpanel"
           },
           {
-            "command": "fornax:logout",
-            "args": {
-              "origin": "logout from the menu"
+            "command": "fornax:logout"
+          },
+          {
+            "type": "submenu",
+            "submenu": {
+              "id": "Keep-Alive",
+              "items": [
+                {
+                  "command": "fornax:keepalive-start"
+                },
+                {
+                  "command": "fornax:keepalive-stop"
+                }
+              ]
             }
           }
         ]

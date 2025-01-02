@@ -54,6 +54,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
   activate: (app: JupyterFrontEnd, palette: ICommandPalette) => {
     console.log('JupyterLab extension fornax-labextension is activated!');
 
+    // Create Navigation Commands //
     const nav_commands: NavCommandOptions[] = [
       {
         id: 'fornax:cpanel',
@@ -72,6 +73,26 @@ const plugin: JupyterFrontEndPlugin<void> = {
     nav_commands.forEach(commandOptions => {
       CreateNavCommand(commandOptions, palette, app);
     });
+    // -------------------------- //
+
+    // Create Wrappers around keep-alive commands so we can
+    // have custom labels
+    const keepalive_start = 'fornax:keepalive-start';
+    app.commands.addCommand(keepalive_start, {
+      label: "Start Keep-alive Session",
+      execute: async () => {
+        app.commands.execute("keepalive:start-dialog");
+      }
+    });
+    
+    const keepalive_stop = 'fornax:keepalive-stop';
+    app.commands.addCommand(keepalive_stop, {
+      label: "Stop Keep-alive Session",
+      execute: async () => {
+        app.commands.execute("keepalive:stop");
+      }
+    });
+    // ----------------------------------------------------- //
   }
 };
 
