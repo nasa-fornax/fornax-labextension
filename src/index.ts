@@ -1,13 +1,16 @@
 import {JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
-
 import { ICommandPalette } from '@jupyterlab/apputils';
-import { IStateDB } from '@jupyterlab/statedb';
+
 
 import {navCommands, CreateNavCommand} from './navCommands'
 
+// Some variables //
 const PLUGIN_ID = 'fornax-labextension:plugin';
 const COMMAND_CATEGORY = 'Fornax Commands';
 
+
+// Create wrappers around the keepalive commands
+// so we can add them to the Fornax-menu 
 function keepAliveCommands(app: JupyterFrontEnd) {
   const keepalive_start = 'fornax:keepalive-start';
   app.commands.addCommand(keepalive_start, {
@@ -26,6 +29,11 @@ function keepAliveCommands(app: JupyterFrontEnd) {
   });
 }
 
+/*
+Activate the extension
+- Loop through navCommands and add them to the fornax menu
+- Add the keepalive commands to the fornax menu
+*/ 
 function activateFornaxExtension(
   app: JupyterFrontEnd,
   palette: ICommandPalette
@@ -52,7 +60,7 @@ const fornaxExtension: JupyterFrontEndPlugin<void> = {
   id: PLUGIN_ID,
   description: 'A JupyterLab extension for Fornax',
   autoStart: true,
-  requires: [ICommandPalette, IStateDB, JupyterFrontEnd.IPaths],
+  requires: [ICommandPalette, JupyterFrontEnd.IPaths],
   activate: activateFornaxExtension
 };
 
