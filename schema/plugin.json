@@ -9,6 +9,12 @@
         "rank": 120,
         "items": [
           {
+            "command": "fornax:gh-docs"
+          },
+          {
+            "command": "fornax:discourse"
+          },
+          {
             "command": "fornax:cpanel"
           },
           {

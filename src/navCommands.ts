@@ -5,13 +5,25 @@ import { ICommandPalette, showDialog, Dialog} from '@jupyterlab/apputils';
 interface NavCommandOptions {
     id: string,
     label: string,
-    diag_body: string,
+    diag_body: string | null,
     navlink: string,
 }
 
 // List of navigation items //
 export const navCommands: NavCommandOptions[] = [
     // navigate to the control panel
+    {
+      id: 'fornax:gh-docs',
+      label: 'User Guide',
+      diag_body: null,
+      navlink: 'https://nasa-fornax.github.io/fornax-demo-notebooks/documentation/README.html'
+    },
+    {
+      id: 'fornax:discourse',
+      label: 'Help & Support',
+      diag_body: null,
+      navlink: 'https://discourse.fornax.smce.nasa.gov/'
+    },
     {
       id: 'fornax:cpanel',
       label: 'Server Control',
@@ -46,18 +58,22 @@ export function CreateNavCommand(
     app.commands.addCommand(command, {
         label: options.label,
         execute: async (args: any) => {
-            const result = await showDialog({
-                title: 'Confirmation',
-                body: options.diag_body,
-                buttons: [
-                    Dialog.cancelButton(),
-                    Dialog.okButton({ label: 'Yes' })
-                ]
-            });
-            const orig = args['origin'];
-            if (result.button.accept) {
-                console.debug(`Navigating to ${options.navlink}. Origin: ${orig}`);
-                window.location.href = options.navlink;
+            if (options.diag_body === null) {
+                window.open(options.navlink, '_blank');
+            } else {
+                const result = await showDialog({
+                    title: 'Confirmation',
+                    body: options.diag_body,
+                    buttons: [
+                        Dialog.cancelButton(),
+                        Dialog.okButton({ label: 'Yes' })
+                    ]
+                });
+                const orig = args['origin'];
+                if (result.button.accept) {
+                    console.debug(`Navigating to ${options.navlink}. Origin: ${orig}`);
+                    window.location.href = options.navlink;
+                }
             }
         }
     });
