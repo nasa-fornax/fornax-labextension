@@ -1,8 +1,9 @@
 import {JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
 import { ICommandPalette } from '@jupyterlab/apputils';
-
+import { ILauncher } from '@jupyterlab/launcher';
 
 import {navCommands, CreateNavCommand} from './navCommands'
+import { removeNBKernels } from './kernels';
 
 // Some variables //
 const PLUGIN_ID = 'fornax-labextension:plugin';
@@ -36,9 +37,13 @@ Activate the extension
 */ 
 function activateFornaxExtension(
   app: JupyterFrontEnd,
-  palette: ICommandPalette
+  palette: ICommandPalette,
+  launcher: ILauncher,
 ) {
   console.log('JupyterLab extension fornax-labextension is activated!');
+
+  // remove notebook kernels; those with name: nb-*
+  removeNBKernels(launcher, 'nb-')
 
   // Create Navigation Commands //
   navCommands.forEach(commandOptions => {
@@ -60,7 +65,7 @@ const fornaxExtension: JupyterFrontEndPlugin<void> = {
   id: PLUGIN_ID,
   description: 'A JupyterLab extension for Fornax',
   autoStart: true,
-  requires: [ICommandPalette, JupyterFrontEnd.IPaths],
+  requires: [ICommandPalette, ILauncher],
   activate: activateFornaxExtension
 };
 
