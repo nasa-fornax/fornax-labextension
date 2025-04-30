@@ -51,6 +51,23 @@ function activateFornaxExtension(
   });
   // -------------------------- //
 
+  // add link to user guide
+  launcher.add({
+    command: 'fornax:dashboard',
+    category: 'Fornax',
+    rank: -1001,
+  });
+  launcher.add({
+    command: 'fornax:gh-docs',
+    category: 'Fornax',
+    rank: -1000,
+  });
+  launcher.add({
+    command: 'fornax:discourse',
+    category: 'Fornax',
+    rank: -900,
+  });
+
   // Create Wrappers around keep-alive commands so we can
   // have custom labels
   keepAliveCommands(app);

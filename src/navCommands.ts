@@ -1,12 +1,21 @@
 import { JupyterFrontEnd } from '@jupyterlab/application';
 import { ICommandPalette, showDialog, Dialog} from '@jupyterlab/apputils';
+import { LabIcon } from '@jupyterlab/ui-components';
+
+import fornaxSvg from '../style/fornax.svg'
+
+export const fornaxIcon = new LabIcon({
+  name: 'fornax:icon',
+  svgstr: fornaxSvg
+});
 
 // Hold a naviration item options //
 interface NavCommandOptions {
     id: string,
     label: string,
-    diag_body: string | null,
     navlink: string,
+    diag_body: string | null,
+    icon: LabIcon | undefined,
 }
 
 // List of navigation items //
@@ -16,26 +25,37 @@ export const navCommands: NavCommandOptions[] = [
       id: 'fornax:gh-docs',
       label: 'User Guide',
       diag_body: null,
-      navlink: 'https://nasa-fornax.github.io/fornax-demo-notebooks/documentation/README.html'
+      navlink: 'https://nasa-fornax.github.io/fornax-demo-notebooks/documentation/README.html',
+      icon: fornaxIcon
     },
     {
       id: 'fornax:discourse',
       label: 'Help & Support',
       diag_body: null,
-      navlink: 'https://discourse.fornax.smce.nasa.gov/'
+      navlink: 'https://discourse.fornax.smce.nasa.gov/',
+      icon: fornaxIcon
+    },
+    {
+      id: 'fornax:dashboard',
+      label: 'Main Dashboard',
+      diag_body: null,
+      navlink: 'https://science-console.fornax.smce.nasa.gov/',
+      icon: fornaxIcon
     },
     {
       id: 'fornax:cpanel',
       label: 'Server Control',
       diag_body: 'Are you sure you want to navigate to the control panel?',
-      navlink: '/hub/home'
+      navlink: '/hub/home',
+      icon: undefined
     },
     // navigate to the logout page
     {
       id: 'fornax:logout',
       label: 'Logout',
       diag_body: 'Are you sure you want to logout?',
-      navlink: '/hub/logout'
+      navlink: '/hub/logout',
+      icon: undefined
     }
   ];
   
@@ -57,6 +77,7 @@ export function CreateNavCommand(
     const command = options.id;
     app.commands.addCommand(command, {
         label: options.label,
+        icon: options.icon,
         execute: async (args: any) => {
             if (options.diag_body === null) {
                 window.open(options.navlink, '_blank');
