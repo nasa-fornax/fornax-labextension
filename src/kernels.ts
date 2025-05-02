@@ -7,7 +7,7 @@ const nullDisposable: IDisposable = {
     return true;
   }
 };
-  
+
 /*
 Remove notebook kernels from the main page;
 but not from the drop down in the notebook selection
@@ -16,11 +16,11 @@ Input:
   - pattern: string, name pattern, e.g. 'nb-'
 */
 export function removeNBKernels(launcher: ILauncher, pattern: string) {
-    const originalAdd = launcher.add.bind(launcher);
-    launcher.add = (options) => {
+  const originalAdd = launcher.add.bind(launcher);
+  launcher.add = options => {
     if (options.kernelIconUrl?.includes(pattern)) {
-        return nullDisposable;
+      return nullDisposable;
     }
     return originalAdd(options);
-    };
+  };
 }

@@ -10,15 +10,12 @@ import { ServerConnection } from '@jupyterlab/services';
  * @returns The response body interpreted as JSON
  */
 export async function requestAPI<T>(
-    endPoint = '',
-    init: RequestInit = {}
+  endPoint = '',
+  init: RequestInit = {}
 ): Promise<T> {
   // Make request to Jupyter API
   const settings = ServerConnection.makeSettings();
-  const requestUrl = URLExt.join(
-    settings.baseUrl,
-    endPoint
-  );
+  const requestUrl = URLExt.join(settings.baseUrl, endPoint);
   console.log(`requestUrl: ${requestUrl}`);
 
   let response: Response;
