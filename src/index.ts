@@ -43,7 +43,7 @@ function activateFornaxExtension(
   console.log('JupyterLab extension fornax-labextension is activated!');
 
   // remove notebook kernels; those with name: nb-*
-  removeNBKernels(launcher, 'nb-')
+  removeNBKernels(launcher, 'py-')
 
   // Create Navigation Commands //
   navCommands.forEach(commandOptions => {
