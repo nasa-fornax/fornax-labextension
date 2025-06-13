@@ -50,19 +50,12 @@ export const navCommands: INavCommandOptions[] = [
   },
   {
     id: 'fornax:cpanel',
-    label: 'Server Control',
-    diag_body: 'Are you sure you want to navigate to the control panel?',
+    label: 'Shutdown Server',
+    //diag_body: 'Are you sure you want to navigate to the scontrol panel?',
+    diag_body: null,
     navlink: hubBase + '/hub/home',
     icon: undefined
   },
-  // navigate to the logout page
-  {
-    id: 'fornax:logout',
-    label: 'Logout',
-    diag_body: 'Are you sure you want to logout?',
-    navlink: hubBase + '/hub/logout',
-    icon: undefined
-  }
 ];
 
 /*
