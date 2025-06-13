@@ -1,8 +1,13 @@
 import { JupyterFrontEnd } from '@jupyterlab/application';
 import { ICommandPalette, showDialog, Dialog } from '@jupyterlab/apputils';
 import { LabIcon } from '@jupyterlab/ui-components';
+import { PageConfig } from '@jupyterlab/coreutils';
 
 import fornaxSvg from '../style/fornax.svg';
+
+const baseUrl = PageConfig.getBaseUrl();
+const match = baseUrl.match(/^https?:\/\/[^/]+(\/[^/]+)\/user\/[^/]+\/?$/);
+const hubBase = match ? match[1] : '/';
 
 export const fornaxIcon = new LabIcon({
   name: 'fornax:icon',
@@ -47,7 +52,7 @@ export const navCommands: INavCommandOptions[] = [
     id: 'fornax:cpanel',
     label: 'Server Control',
     diag_body: 'Are you sure you want to navigate to the control panel?',
-    navlink: '/hub/home',
+    navlink: hubBase + '/hub/home',
     icon: undefined
   },
   // navigate to the logout page
@@ -55,7 +60,7 @@ export const navCommands: INavCommandOptions[] = [
     id: 'fornax:logout',
     label: 'Logout',
     diag_body: 'Are you sure you want to logout?',
-    navlink: '/hub/logout',
+    navlink: hubBase + '/hub/logout',
     icon: undefined
   }
 ];
