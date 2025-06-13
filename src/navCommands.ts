@@ -55,7 +55,7 @@ export const navCommands: INavCommandOptions[] = [
     diag_body: null,
     navlink: hubBase + '/hub/home',
     icon: undefined
-  },
+  }
 ];
 
 /*
