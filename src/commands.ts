@@ -2,6 +2,7 @@ import { JupyterFrontEnd } from '@jupyterlab/application';
 import { ICommandPalette, showDialog, Dialog } from '@jupyterlab/apputils';
 import { LabIcon } from '@jupyterlab/ui-components';
 import { PageConfig } from '@jupyterlab/coreutils';
+import { ILauncher } from '@jupyterlab/launcher';
 
 import fornaxSvg from '../style/fornax.svg';
 
@@ -24,7 +25,7 @@ interface INavCommandOptions {
 }
 
 // List of navigation items //
-export const navCommands: INavCommandOptions[] = [
+const navCommands: INavCommandOptions[] = [
   // navigate to the control panel
   {
     id: 'fornax:gh-docs',
@@ -66,7 +67,7 @@ Input:
   - palette: ICommandPalette,
   = app: JupyterFrontEnd
 */
-export function CreateNavCommand(
+function CreateNavCommand(
   category: string,
   options: INavCommandOptions,
   palette: ICommandPalette,
@@ -103,4 +104,41 @@ export function CreateNavCommand(
   });
 
   return command;
+}
+
+/*
+Create navigation commands. Call CreateNavCommand for each element in navCommands
+Input:
+  - category (string): a label to group the commands,
+  - palette: ICommandPalette,
+  - app: JupyterFrontEnd
+*/
+export function CreateNavCommands(category: string, palette: ICommandPalette, app: JupyterFrontEnd) {
+    navCommands.forEach(commandOptions => {
+      CreateNavCommand(category, commandOptions, palette, app);
+    });
+}
+
+/*
+Add Launcher items
+Input:
+  - launcher: ILauncher,
+*/
+export function addLauncherItems(launcher: ILauncher) {
+    // add link to user guide
+    launcher.add({
+      command: 'fornax:dashboard',
+      category: 'Fornax',
+      rank: -1001
+    });
+    launcher.add({
+      command: 'fornax:gh-docs',
+      category: 'Fornax',
+      rank: -1000
+    });
+    launcher.add({
+      command: 'fornax:discourse',
+      category: 'Fornax',
+      rank: -900
+    });
 }

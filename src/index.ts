@@ -5,15 +5,18 @@ import {
 import { ICommandPalette } from '@jupyterlab/apputils';
 import { ILauncher } from '@jupyterlab/launcher';
 
-import { navCommands, CreateNavCommand } from './navCommands';
+import { CreateNavCommands, addLauncherItems } from './commands';
 import { removeNBKernels } from './kernels';
 
 // Some variables //
 const PLUGIN_ID = 'fornax-labextension:plugin';
 const COMMAND_CATEGORY = 'Fornax Commands';
+const KERNEL_FILTER_PATTERN = 'py-';
+
 
 // Create wrappers around the keepalive commands
 // so we can add them to the Fornax-menu
+// Actual adding is done in schema/plugin.json
 function keepAliveCommands(app: JupyterFrontEnd) {
   const keepalive_start = 'fornax:keepalive-start';
   app.commands.addCommand(keepalive_start, {
@@ -44,36 +47,21 @@ function activateFornaxExtension(
 ) {
   console.log('JupyterLab extension fornax-labextension is activated!');
 
-  // remove notebook kernels; those with name: nb-*
-  removeNBKernels(launcher, 'py-');
+  // remove notebook kernels; those with name: py-*
+  removeNBKernels(launcher, KERNEL_FILTER_PATTERN);
 
   // Create Navigation Commands //
-  navCommands.forEach(commandOptions => {
-    CreateNavCommand(COMMAND_CATEGORY, commandOptions, palette, app);
-  });
-  // -------------------------- //
+  // Actual adding is done in schema/plugin.json
+  CreateNavCommands(COMMAND_CATEGORY, palette, app);
 
-  // add link to user guide
-  launcher.add({
-    command: 'fornax:dashboard',
-    category: 'Fornax',
-    rank: -1001
-  });
-  launcher.add({
-    command: 'fornax:gh-docs',
-    category: 'Fornax',
-    rank: -1000
-  });
-  launcher.add({
-    command: 'fornax:discourse',
-    category: 'Fornax',
-    rank: -900
-  });
+
+  // Add Fornax Launcher items //
+  addLauncherItems(launcher);
+
 
   // Create Wrappers around keep-alive commands so we can
   // have custom labels
   keepAliveCommands(app);
-  // ----------------------------------------------------- //
 }
 
 /**
