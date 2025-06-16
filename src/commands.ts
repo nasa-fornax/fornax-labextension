@@ -10,13 +10,13 @@ const baseUrl = PageConfig.getBaseUrl();
 const match = baseUrl.match(/^https?:\/\/[^/]+(\/[^/]+)\/user\/[^/]+\/?$/);
 const hubBase = match ? match[1] : '/';
 
-export const fornaxIcon = new LabIcon({
+const fornaxIcon = new LabIcon({
   name: 'fornax:icon',
   svgstr: fornaxSvg
 });
 
 // Hold a naviration item options //
-interface INavCommandOptions {
+export interface INavCommandOptions {
   id: string;
   label: string;
   navlink: string;
@@ -67,7 +67,7 @@ Input:
   - palette: ICommandPalette,
   = app: JupyterFrontEnd
 */
-function CreateNavCommand(
+export function CreateNavCommand(
   category: string,
   options: INavCommandOptions,
   palette: ICommandPalette,
@@ -96,7 +96,7 @@ function CreateNavCommand(
     }
   });
   // add this command to the command palette
-  // Adding it to the Fornax menu is done in index.ts
+  // Adding it to the Fornax menu is done in schema.json
   palette.addItem({
     command: command,
     category,
