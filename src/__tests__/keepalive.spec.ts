@@ -2,52 +2,52 @@ import { JupyterFrontEnd } from '@jupyterlab/application';
 import { keepAliveCommands } from '../index';
 
 describe('keepAliveCommands', () => {
-let mockApp: Partial<JupyterFrontEnd>;
-let mockCommands: Partial<JupyterFrontEnd['commands']>;
-let mockAddCommand: jest.Mock;
-let mockExecuteCommand: jest.Mock;
+  let mockApp: Partial<JupyterFrontEnd>;
+  let mockCommands: Partial<JupyterFrontEnd['commands']>;
+  let mockAddCommand: jest.Mock;
+  let mockExecuteCommand: jest.Mock;
 
-beforeEach(() => {
+  beforeEach(() => {
     // Reset mocks for each test
     mockAddCommand = jest.fn();
     mockExecuteCommand = jest.fn();
     mockCommands = {
-    addCommand: mockAddCommand,
-    execute: mockExecuteCommand,
+      addCommand: mockAddCommand,
+      execute: mockExecuteCommand
     };
     mockApp = {
-    commands: mockCommands as JupyterFrontEnd['commands'],
+      commands: mockCommands as JupyterFrontEnd['commands']
     };
-});
+  });
 
-it('should add "fornax:keepalive-start" command with correct label', () => {
+  it('should add "fornax:keepalive-start" command with correct label', () => {
     keepAliveCommands(mockApp as JupyterFrontEnd);
 
     expect(mockAddCommand).toHaveBeenCalledWith(
-    'fornax:keepalive-start',
-    expect.objectContaining({
-        label: 'Start Keep-alive Session',
-    })
+      'fornax:keepalive-start',
+      expect.objectContaining({
+        label: 'Start Keep-alive Session'
+      })
     );
-});
+  });
 
-it('should add "fornax:keepalive-stop" command with correct label', () => {
+  it('should add "fornax:keepalive-stop" command with correct label', () => {
     keepAliveCommands(mockApp as JupyterFrontEnd);
 
     expect(mockAddCommand).toHaveBeenCalledWith(
-    'fornax:keepalive-stop',
-    expect.objectContaining({
-        label: 'Stop Keep-alive Session',
-    })
+      'fornax:keepalive-stop',
+      expect.objectContaining({
+        label: 'Stop Keep-alive Session'
+      })
     );
-});
+  });
 
-it('should ensure "fornax:keepalive-start" command executes "keepalive:start-dialog"', async () => {
+  it('should ensure "fornax:keepalive-start" command executes "keepalive:start-dialog"', async () => {
     keepAliveCommands(mockApp as JupyterFrontEnd);
 
     // Find the call for 'fornax:keepalive-start' in mockAddCommand.mock.calls
     const startCommandCall = mockAddCommand.mock.calls.find(
-    call => call[0] === 'fornax:keepalive-start'
+      call => call[0] === 'fornax:keepalive-start'
     );
     expect(startCommandCall).toBeDefined(); // Ensure the command was added
 
@@ -56,13 +56,13 @@ it('should ensure "fornax:keepalive-start" command executes "keepalive:start-dia
     await startCommandExecute(); // Execute the function
 
     expect(mockExecuteCommand).toHaveBeenCalledWith('keepalive:start-dialog');
-});
+  });
 
-it('should ensure "fornax:keepalive-stop" command executes "keepalive:stop"', async () => {
+  it('should ensure "fornax:keepalive-stop" command executes "keepalive:stop"', async () => {
     keepAliveCommands(mockApp as JupyterFrontEnd);
 
     const stopCommandCall = mockAddCommand.mock.calls.find(
-    call => call[0] === 'fornax:keepalive-stop'
+      call => call[0] === 'fornax:keepalive-stop'
     );
     expect(stopCommandCall).toBeDefined();
 
@@ -70,10 +70,10 @@ it('should ensure "fornax:keepalive-stop" command executes "keepalive:stop"', as
     await stopCommandExecute();
 
     expect(mockExecuteCommand).toHaveBeenCalledWith('keepalive:stop');
-});
+  });
 
-it('should add exactly two commands', () => {
+  it('should add exactly two commands', () => {
     keepAliveCommands(mockApp as JupyterFrontEnd);
     expect(mockAddCommand).toHaveBeenCalledTimes(2);
-});
+  });
 });

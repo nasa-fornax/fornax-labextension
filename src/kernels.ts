@@ -20,8 +20,10 @@ Input:
 export function removeNBKernels(launcher: ILauncher, pattern: string) {
   const originalAdd = launcher.add.bind(launcher);
   launcher.add = options => {
-    if ((options.category === 'Notebook' || options.category === 'Console') 
-        && options.kernelIconUrl?.includes('kernelspecs/' + pattern)) {
+    if (
+      (options.category === 'Notebook' || options.category === 'Console') &&
+      options.kernelIconUrl?.includes('kernelspecs/' + pattern)
+    ) {
       return nullDisposable;
     }
     return originalAdd(options);

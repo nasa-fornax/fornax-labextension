@@ -1,9 +1,6 @@
-
-
 import { ILauncher } from '@jupyterlab/launcher';
 import { IDisposable } from '@lumino/disposable';
 import { removeNBKernels, nullDisposable } from '../kernels';
-
 
 describe('removeNBKernels', () => {
   let mockLauncher: ILauncher;
@@ -14,7 +11,6 @@ describe('removeNBKernels', () => {
   };
   let categories: string[] = ['Notebook', 'Console'];
 
-
   beforeEach(() => {
     // Reset mocks for each test
     originalAddSpy = jest.fn().mockReturnValue(mockDisposable);
@@ -23,36 +19,41 @@ describe('removeNBKernels', () => {
     } as unknown as ILauncher;
   });
 
-  it.each(categories)('should prevent adding %1 kernels matching a pattern', (category: string) => {
-    removeNBKernels(mockLauncher, 'py-');
-    const optionsWithPattern: ILauncher.IItemOptions = {
-      command: 'test:commandWithPattern',
-      category: category,
-      kernelIconUrl: 'kernelspecs/py-something/python-kernel.svg'
-    };
+  it.each(categories)(
+    'should prevent adding %1 kernels matching a pattern',
+    (category: string) => {
+      removeNBKernels(mockLauncher, 'py-');
+      const optionsWithPattern: ILauncher.IItemOptions = {
+        command: 'test:commandWithPattern',
+        category: category,
+        kernelIconUrl: 'kernelspecs/py-something/python-kernel.svg'
+      };
 
-    const result = mockLauncher.add(optionsWithPattern);
+      const result = mockLauncher.add(optionsWithPattern);
 
-    expect(result).toBe(nullDisposable);
-    expect(result.isDisposed).toBe(true); // Characteristic of the nullDisposable
-    expect(typeof result.dispose).toBe('function');
-    expect(originalAddSpy).not.toHaveBeenCalled();
+      expect(result).toBe(nullDisposable);
+      expect(result.isDisposed).toBe(true); // Characteristic of the nullDisposable
+      expect(typeof result.dispose).toBe('function');
+      expect(originalAddSpy).not.toHaveBeenCalled();
+    }
+  );
 
-  })
+  it.each(categories)(
+    'should add %1 kernel matching a pattern',
+    (category: string) => {
+      removeNBKernels(mockLauncher, 'py-');
+      const optionsWithoutPattern: ILauncher.IItemOptions = {
+        command: 'test:commandWithPattern',
+        category: category,
+        kernelIconUrl: 'kernelspecs/something/python-kernel.svg'
+      };
 
-  it.each(categories)('should add %1 kernel matching a pattern', (category: string) => {
-    removeNBKernels(mockLauncher, 'py-');
-    const optionsWithoutPattern: ILauncher.IItemOptions = {
-      command: 'test:commandWithPattern',
-      category: category,
-      kernelIconUrl: 'kernelspecs/something/python-kernel.svg'
-    };
+      const result = mockLauncher.add(optionsWithoutPattern);
 
-    const result = mockLauncher.add(optionsWithoutPattern);
-
-    expect(result).toBe(mockDisposable); // Should return the result of the original add
-    expect(originalAddSpy).toHaveBeenCalledWith(optionsWithoutPattern);
-  })
+      expect(result).toBe(mockDisposable); // Should return the result of the original add
+      expect(originalAddSpy).toHaveBeenCalledWith(optionsWithoutPattern);
+    }
+  );
 
   it('should allow adding non Notebook or Console items', () => {
     removeNBKernels(mockLauncher, 'nb-');

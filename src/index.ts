@@ -13,7 +13,6 @@ const PLUGIN_ID = 'fornax-labextension:plugin';
 const COMMAND_CATEGORY = 'Fornax Commands';
 const KERNEL_FILTER_PATTERN = 'py-';
 
-
 // Create wrappers around the keepalive commands
 // so we can add them to the Fornax-menu
 // Actual adding is done in schema/plugin.json
@@ -54,10 +53,8 @@ function activateFornaxExtension(
   // Actual adding is done in schema/plugin.json
   CreateNavCommands(COMMAND_CATEGORY, palette, app);
 
-
   // Add Fornax Launcher items //
   addLauncherItems(launcher);
-
 
   // Create Wrappers around keep-alive commands so we can
   // have custom labels

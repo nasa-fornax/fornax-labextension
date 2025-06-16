@@ -113,10 +113,14 @@ Input:
   - palette: ICommandPalette,
   - app: JupyterFrontEnd
 */
-export function CreateNavCommands(category: string, palette: ICommandPalette, app: JupyterFrontEnd) {
-    navCommands.forEach(commandOptions => {
-      CreateNavCommand(category, commandOptions, palette, app);
-    });
+export function CreateNavCommands(
+  category: string,
+  palette: ICommandPalette,
+  app: JupyterFrontEnd
+) {
+  navCommands.forEach(commandOptions => {
+    CreateNavCommand(category, commandOptions, palette, app);
+  });
 }
 
 /*
@@ -125,20 +129,20 @@ Input:
   - launcher: ILauncher,
 */
 export function addLauncherItems(launcher: ILauncher) {
-    // add link to user guide
-    launcher.add({
-      command: 'fornax:dashboard',
-      category: 'Fornax',
-      rank: -1001
-    });
-    launcher.add({
-      command: 'fornax:gh-docs',
-      category: 'Fornax',
-      rank: -1000
-    });
-    launcher.add({
-      command: 'fornax:discourse',
-      category: 'Fornax',
-      rank: -900
-    });
+  // add link to user guide
+  launcher.add({
+    command: 'fornax:dashboard',
+    category: 'Fornax',
+    rank: -1001
+  });
+  launcher.add({
+    command: 'fornax:gh-docs',
+    category: 'Fornax',
+    rank: -1000
+  });
+  launcher.add({
+    command: 'fornax:discourse',
+    category: 'Fornax',
+    rank: -900
+  });
 }
