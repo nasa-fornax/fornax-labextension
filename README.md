@@ -1,7 +1,5 @@
 # fornax_labextension
 
-[![Github Actions Status](/workflows/Build/badge.svg)](/actions/workflows/build.yml)
-
 A JupyterLab extension for Fornax
 
 ## Requirements
