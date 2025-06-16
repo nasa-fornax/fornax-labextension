@@ -27,7 +27,7 @@
     "style": "style/index.css",
     "repository": {
         "type": "git",
-        "url": ".git"
+        "url": "https://github.com/nasa-fornax/fornax-labextension"
     },
     "scripts": {
         "build": "jlpm build:lib && jlpm build:labextension:dev",
