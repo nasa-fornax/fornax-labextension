@@ -17,7 +17,7 @@ const KERNEL_FILTER_PATTERN = 'py-';
 // Create wrappers around the keepalive commands
 // so we can add them to the Fornax-menu
 // Actual adding is done in schema/plugin.json
-function keepAliveCommands(app: JupyterFrontEnd) {
+export function keepAliveCommands(app: JupyterFrontEnd) {
   const keepalive_start = 'fornax:keepalive-start';
   app.commands.addCommand(keepalive_start, {
     label: 'Start Keep-alive Session',
