@@ -5,7 +5,7 @@ import {
 import { ICommandPalette } from '@jupyterlab/apputils';
 import { ILauncher } from '@jupyterlab/launcher';
 
-import { CreateNavCommands, addLauncherItems } from './commands';
+import { CreateNavCommands, addLauncherItems, addReleaseNotesCommand } from './commands';
 import { removeNBKernels } from './kernels';
 
 // Some variables //
@@ -52,6 +52,11 @@ function activateFornaxExtension(
   // Create Navigation Commands //
   // Actual adding is done in schema/plugin.json
   CreateNavCommands(COMMAND_CATEGORY, palette, app);
+
+  // Add 'Release Notes' command to the palette
+  addReleaseNotesCommand(
+    app,
+    palette, COMMAND_CATEGORY);
 
   // Add Fornax Launcher items //
   addLauncherItems(launcher);

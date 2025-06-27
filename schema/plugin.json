@@ -30,6 +30,17 @@
                 }
               ]
             }
+          },
+          {
+            "type": "submenu",
+            "submenu": {
+              "id": "About",
+              "items": [
+                {
+                  "command": "fornax:container-release-notes"
+                }
+              ]
+            }
           }
         ]
       }

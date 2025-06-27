@@ -3,6 +3,7 @@ import { ICommandPalette, showDialog, Dialog } from '@jupyterlab/apputils';
 import { LabIcon } from '@jupyterlab/ui-components';
 import { PageConfig } from '@jupyterlab/coreutils';
 import { ILauncher } from '@jupyterlab/launcher';
+import { Widget } from '@lumino/widgets';
 
 import fornaxSvg from '../style/fornax.svg';
 
@@ -145,4 +146,50 @@ export function addLauncherItems(launcher: ILauncher) {
     category: 'Fornax',
     rank: -900
   });
+}
+
+/**
+ * Create a command that opens an HTML file in the JupyterLab interface
+ * @param app - The JupyterFrontEnd application
+ * @param palette - Command palette to add the command to
+ * @param category - Category for the command palette
+ */
+export function addReleaseNotesCommand(
+  app: JupyterFrontEnd,
+  palette?: ICommandPalette,
+  category?: string
+): void {
+  const commandId = 'fornax:container-release-notes';
+  const label = 'Containers Release Notes';
+  const htmlFilePath = 'fornax-notebooks/introduction.html';
+  const widget = new Widget();
+  widget.node.innerHTML = `
+    See the <a href="https://github.com/nasa-fornax/fornax-images/blob/develop/introduction.md">Release Notes</a> on github for more information.
+  `;
+  app.commands.addCommand(commandId, {
+    label: label,
+    execute: async () => {
+      try {
+        // Use JupyterLab's built-in document manager to open the HTML file
+        await app.commands.execute('docmanager:open', {
+          path: htmlFilePath
+        });
+      } catch (error) {
+        console.error('Error opening HTML file:', error);
+        await showDialog({
+          title: 'Release Notes on GitHub',
+          body: widget as unknown as Dialog.IBodyWidget,
+          buttons: [Dialog.okButton({ label: 'Close' })]
+        });
+      }
+    }
+  });
+
+  // Add to command palette if provided
+  if (palette && category) {
+    palette.addItem({
+      command: commandId,
+      category: category
+    });
+  }
 }
