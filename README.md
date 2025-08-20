@@ -39,7 +39,10 @@ The `jlpm` command is JupyterLab's pinned version of
 pip install -e "."
 # Link your development version of the extension with JupyterLab
 jupyter labextension develop . --overwrite
-# Rebuild extension Typescript source after making changes
+# install node dependencies
+jlpm install
+# Rebuild extension Typescript source after making changes;
+# Need to be able to run executables from /tmp/
 jlpm build
 ```
 
