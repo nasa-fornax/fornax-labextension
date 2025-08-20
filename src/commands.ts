@@ -33,21 +33,21 @@ const navCommands: INavCommandOptions[] = [
     label: 'User Guide',
     diag_body: null,
     navlink:
-      'https://nasa-fornax.github.io/fornax-demo-notebooks/documentation/README.html',
+      'https://nasa-fornax.github.io/fornax-documentation/',
     icon: fornaxIcon
   },
   {
     id: 'fornax:discourse',
     label: 'Help & Support',
     diag_body: null,
-    navlink: 'https://discourse.fornax.smce.nasa.gov/',
+    navlink: 'https://discourse.fornax.sciencecloud.nasa.gov/',
     icon: fornaxIcon
   },
   {
     id: 'fornax:dashboard',
     label: 'Main Dashboard',
     diag_body: null,
-    navlink: 'https://science-console.fornax.smce.nasa.gov/',
+    navlink: 'https://science-console.fornax.sciencecloud.nasa.gov/',
     icon: fornaxIcon
   },
   {
