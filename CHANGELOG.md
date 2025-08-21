@@ -18,6 +18,10 @@ First prototype that adds:
 
 - Add release-notes command
 
+# 0.1.3
+
+- Update links from .smce. to .sciencecloud.
+
 <!-- <START NEW CHANGELOG ENTRY> -->
 
 <!-- <END NEW CHANGELOG ENTRY> -->

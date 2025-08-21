@@ -32,8 +32,7 @@ const navCommands: INavCommandOptions[] = [
     id: 'fornax:gh-docs',
     label: 'User Guide',
     diag_body: null,
-    navlink:
-      'https://nasa-fornax.github.io/fornax-documentation/',
+    navlink: 'https://nasa-fornax.github.io/fornax-documentation/',
     icon: fornaxIcon
   },
   {
