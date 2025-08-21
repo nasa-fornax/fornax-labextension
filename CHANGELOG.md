@@ -13,6 +13,11 @@ First prototype that adds:
 
 - Remove the confusing 'logout' link, and rename 'Server Control' -> 'Shutdown Server'
 - Fix hub links to account for possible base_url in the hub.
+
+# 0.1.2
+
+- Add release-notes command
+
 <!-- <START NEW CHANGELOG ENTRY> -->
 
 <!-- <END NEW CHANGELOG ENTRY> -->
