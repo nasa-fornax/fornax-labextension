@@ -22,6 +22,11 @@ First prototype that adds:
 
 - Update links from .smce. to .sciencecloud.
 
+# 0.1.4
+
+- Add back the link to main dash board
+- Make Release Notes in a menu instead of submenu.
+
 <!-- <START NEW CHANGELOG ENTRY> -->
 
 <!-- <END NEW CHANGELOG ENTRY> -->

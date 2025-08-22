@@ -159,7 +159,7 @@ export function addReleaseNotesCommand(
   category?: string
 ): void {
   const commandId = 'fornax:container-release-notes';
-  const label = 'Containers Release Notes';
+  const label = 'Release Notes';
   const htmlFilePath = 'fornax-notebooks/introduction.html';
   const widget = new Widget();
   widget.node.innerHTML = `
