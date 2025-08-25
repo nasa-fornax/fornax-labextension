@@ -1,0 +1,7 @@
+{
+  "ServerApp": {
+    "jpserver_extensions": {
+      "fornax_labextension": true
+    }
+  }
+}

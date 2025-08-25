@@ -1,6 +1,6 @@
-// import { URLExt } from '@jupyterlab/coreutils';
+import { URLExt } from '@jupyterlab/coreutils';
 
-// import { ServerConnection } from '@jupyterlab/services';
+import { ServerConnection } from '@jupyterlab/services';
 
 /**
  * Call the API extension
@@ -9,35 +9,50 @@
  * @param init Initial values for the request
  * @returns The response body interpreted as JSON
  */
-// export async function requestAPI<T>(
-//   endPoint = '',
-//   init: RequestInit = {}
-// ): Promise<T> {
-//   // Make request to Jupyter API
-//   const settings = ServerConnection.makeSettings();
-//   const requestUrl = URLExt.join(settings.baseUrl, endPoint);
-//   console.log(`requestUrl: ${requestUrl}`);
+export async function requestAPI<T>(
+  endPoint = '',
+  init: RequestInit = {}
+): Promise<T> {
+  // Make request to Jupyter API
+  const settings = ServerConnection.makeSettings();
+  const requestUrl = URLExt.join(settings.baseUrl, endPoint);
+  console.log(`requestUrl: ${requestUrl}`);
 
-//   let response: Response;
-//   try {
-//     response = await ServerConnection.makeRequest(requestUrl, init, settings);
-//   } catch (error) {
-//     throw new ServerConnection.NetworkError(error as any);
-//   }
+  let response: Response;
+  try {
+    response = await ServerConnection.makeRequest(requestUrl, init, settings);
+  } catch (error) {
+    throw new ServerConnection.NetworkError(error as any);
+  }
 
-//   let data: any = await response.text();
+  let data: any = await response.text();
 
-//   if (data.length > 0) {
-//     try {
-//       data = JSON.parse(data);
-//     } catch (error) {
-//       console.log('Not a JSON response body.', response);
-//     }
-//   }
+  if (data.length > 0) {
+    try {
+      data = JSON.parse(data);
+    } catch (error) {
+      console.log('Not a JSON response body.', response);
+    }
+  }
 
-//   if (!response.ok) {
-//     throw new ServerConnection.ResponseError(response, data.message || data);
-//   }
+  if (!response.ok) {
+    throw new ServerConnection.ResponseError(response, data.message || data);
+  }
 
-//   return data;
-// }
+  return data;
+}
+
+/**
+ * Execute update-notebooks.sh script to update notebooks
+ *
+ * @returns Promise with the operation result
+ */
+export async function executeUpdateNotebooks(): Promise<any> {
+  return requestAPI<any>('fornax-labextension/update-notebooks', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({})
+  });
+}

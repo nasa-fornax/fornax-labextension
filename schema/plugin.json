@@ -18,6 +18,9 @@
             "command": "fornax:discourse"
           },
           {
+            "command": "fornax:update-notebooks"
+          },
+          {
             "command": "fornax:cpanel"
           },
           {

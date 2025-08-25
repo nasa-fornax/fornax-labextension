@@ -6,6 +6,7 @@ import { ILauncher } from '@jupyterlab/launcher';
 import { Widget } from '@lumino/widgets';
 
 import fornaxSvg from '../style/fornax.svg';
+import { executeUpdateNotebooks } from './handler';
 
 const baseUrl = PageConfig.getBaseUrl();
 const match = baseUrl.match(/^https?:\/\/[^/]+(\/[^/]+)\/user\/[^/]+\/?$/);
@@ -180,6 +181,73 @@ export function addReleaseNotesCommand(
           body: widget as unknown as Dialog.IBodyWidget,
           buttons: [Dialog.okButton({ label: 'Close' })]
         });
+      }
+    }
+  });
+
+  // Add to command palette if provided
+  if (palette && category) {
+    palette.addItem({
+      command: commandId,
+      category: category
+    });
+  }
+}
+
+/**
+ * Create a command that updates the notebooks
+ * @param app - The JupyterFrontEnd application
+ * @param palette - Command palette to add the command to
+ * @param category - Category for the command palette
+ */
+export function addUpdateNotebooksCommand(
+  app: JupyterFrontEnd,
+  palette?: ICommandPalette,
+  category?: string
+): void {
+  const commandId = 'fornax:update-notebooks';
+  const label = 'Update Notebooks';
+
+  app.commands.addCommand(commandId, {
+    label: label,
+    execute: async () => {
+      try {
+        // Show confirmation dialog before updating
+        const result = await showDialog({
+          title: 'Update Notebooks',
+          body: 'This will update Fornax notebooks. Any local changes may be overwritten. Continue?',
+          buttons: [Dialog.cancelButton(), Dialog.okButton({ label: 'Update' })]
+        });
+
+        if (!result.button.accept) {
+          return;
+        }
+
+        try {
+          // Execute update script
+          await executeUpdateNotebooks();
+
+          // Show success message
+          await showDialog({
+            title: 'Update Complete',
+            body: 'Notebooks have been successfully updated.',
+            buttons: [Dialog.okButton({ label: 'OK' })]
+          });
+        } catch (error) {
+          // Handle error properly
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+
+          await showDialog({
+            title: 'Update Failed',
+            body: `Failed to update notebooks: \nTry running update-notebooks.sh command manually from the terminal.\nIf the issue persists, please contact support.`,
+            buttons: [Dialog.okButton({ label: 'OK' })]
+          });
+
+          console.error('Error updating notebooks:', errorMessage);
+        }
+      } catch (error) {
+        console.error('Error in update notebooks command:', error);
       }
     }
   });

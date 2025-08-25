@@ -8,7 +8,8 @@ import { ILauncher } from '@jupyterlab/launcher';
 import {
   CreateNavCommands,
   addLauncherItems,
-  addReleaseNotesCommand
+  addReleaseNotesCommand,
+  addUpdateNotebooksCommand
 } from './commands';
 import { removeNBKernels } from './kernels';
 
@@ -59,6 +60,9 @@ function activateFornaxExtension(
 
   // Add 'Release Notes' command to the palette
   addReleaseNotesCommand(app, palette, COMMAND_CATEGORY);
+
+  // Add 'Update Notebooks' command to the palette
+  addUpdateNotebooksCommand(app, palette, COMMAND_CATEGORY);
 
   // Add Fornax Launcher items //
   addLauncherItems(launcher);

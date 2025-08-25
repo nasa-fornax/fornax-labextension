@@ -23,7 +23,8 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
-    'jupyter_keepalive'
+    'jupyter_keepalive',
+    'jupyter_server>=1.6'
 ]
 dynamic = ["version", "description", "authors", "urls", "keywords"]
 
@@ -40,6 +41,8 @@ exclude = [".github", "binder"]
 [tool.hatch.build.targets.wheel.shared-data]
 "fornax_labextension/labextension" = "share/jupyter/labextensions/fornax-labextension"
 "install.json" = "share/jupyter/labextensions/fornax-labextension/install.json"
+"jupyter-config" = "etc/jupyter/jupyter_server_config.d"
+
 
 [tool.hatch.build.hooks.version]
 path = "fornax_labextension/_version.py"
