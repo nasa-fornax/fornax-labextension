@@ -240,7 +240,7 @@ export function addUpdateNotebooksCommand(
 
           await showDialog({
             title: 'Update Failed',
-            body: `Failed to update notebooks: \nTry running update-notebooks.sh command manually from the terminal.\nIf the issue persists, please contact support.`,
+            body: 'Failed to update notebooks: \nTry running update-notebooks.sh command manually from the terminal.\nIf the issue persists, please contact support.',
             buttons: [Dialog.okButton({ label: 'OK' })]
           });
 
