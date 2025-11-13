@@ -23,6 +23,7 @@ export interface INavCommandOptions {
   label: string;
   navlink: string;
   diag_body: string | null;
+  target?: string | '_blank';
   icon: LabIcon | undefined;
 }
 
@@ -56,6 +57,7 @@ const navCommands: INavCommandOptions[] = [
     //diag_body: 'Are you sure you want to navigate to the scontrol panel?',
     diag_body: null,
     navlink: hubBase + '/hub/home',
+    target: '_top',
     icon: undefined
   }
 ];
@@ -81,7 +83,7 @@ export function CreateNavCommand(
     icon: options.icon,
     execute: async (args: any) => {
       if (options.diag_body === null) {
-        window.open(options.navlink, '_blank');
+        window.open(options.navlink, options.target);
       } else {
         const result = await showDialog({
           title: 'Confirmation',
