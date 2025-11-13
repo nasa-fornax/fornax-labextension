@@ -38,6 +38,22 @@ export function keepAliveCommands(app: JupyterFrontEnd) {
     }
   });
 }
+/*
+Capture clicks to open links such as 'hub/home' and 'hub/logout' and
+force them to open in _top target
+*/
+export function changeOpenTarget() {
+  const origOpen = window.open;
+  (window as any).open = function (url: string, target?: string, features?: string) {
+    if (
+        (!target || target === '_blank') && 
+        (url.includes('hub/home') || url.includes('hub/logout'))
+      ) {
+      target = '_top';
+    }
+    return origOpen.call(window, url, target, features);
+  }
+}
 
 /*
 Activate the extension
@@ -70,6 +86,9 @@ function activateFornaxExtension(
   // Create Wrappers around keep-alive commands so we can
   // have custom labels
   keepAliveCommands(app);
+
+  // force links to open in _top
+  changeOpenTarget();
 }
 
 /**
