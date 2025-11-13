@@ -44,15 +44,19 @@ force them to open in _top target
 */
 export function changeOpenTarget() {
   const origOpen = window.open;
-  (window as any).open = function (url: string, target?: string, features?: string) {
+  (window as any).open = function (
+    url: string,
+    target?: string,
+    features?: string
+  ) {
     if (
-        (!target || target === '_blank') && 
-        (url.includes('hub/home') || url.includes('hub/logout'))
-      ) {
+      (!target || target === '_blank') &&
+      (url.includes('hub/home') || url.includes('hub/logout'))
+    ) {
       target = '_top';
     }
     return origOpen.call(window, url, target, features);
-  }
+  };
 }
 
 /*
