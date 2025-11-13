@@ -23,7 +23,7 @@ export interface INavCommandOptions {
   label: string;
   navlink: string;
   diag_body: string | null;
-  target?: string | '_blank';
+  target?: string;
   icon: LabIcon | undefined;
 }
 
@@ -78,12 +78,13 @@ export function CreateNavCommand(
 ): string {
   // Navigate to the requested location
   const command = options.id;
+  const { target = '_blank' } = options;
   app.commands.addCommand(command, {
     label: options.label,
     icon: options.icon,
     execute: async (args: any) => {
       if (options.diag_body === null) {
-        window.open(options.navlink, options.target);
+        window.open(options.navlink, target);
       } else {
         const result = await showDialog({
           title: 'Confirmation',
