@@ -51,7 +51,9 @@ export function changeOpenTarget() {
   ) {
     if (
       (!target || target === '_blank') &&
-      (url.includes('hub/home') || url.includes('hub/logout'))
+      (url.includes('hub/home') ||
+        url.includes('hub/logout') ||
+        url.includes('hub/spawn'))
     ) {
       target = '_top';
     }
