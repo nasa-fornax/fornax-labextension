@@ -4,6 +4,8 @@ import {
 } from '@jupyterlab/application';
 import { ICommandPalette } from '@jupyterlab/apputils';
 import { ILauncher } from '@jupyterlab/launcher';
+import { HTMLViewerFactory } from '@jupyterlab/htmlviewer';
+import { html5Icon } from '@jupyterlab/ui-components';
 
 import {
   CreateNavCommands,
@@ -61,6 +63,27 @@ export function changeOpenTarget() {
   };
 }
 
+/* Add custom file types and viewers
+htm: for XMM help files
+*/
+export function addCustomFileTypes(app: JupyterFrontEnd) {
+  app.docRegistry.addFileType({
+    name: 'htm',
+    contentType: 'file',
+    fileFormat: 'text',
+    displayName: 'HTML File',
+    extensions: ['.htm'],
+    mimeTypes: ['text/html'],
+    icon: html5Icon
+  });
+  const factory = new HTMLViewerFactory({
+    name: 'HTM Viewer',
+    fileTypes: ['htm'],
+    defaultFor: ['htm']
+  });
+  app.docRegistry.addWidgetFactory(factory);
+}
+
 /*
 Activate the extension
 - Loop through navCommands and add them to the fornax menu
@@ -95,6 +118,9 @@ function activateFornaxExtension(
 
   // force links to open in _top
   changeOpenTarget();
+
+  // add mime types
+  addCustomFileTypes(app);
 }
 
 /**
