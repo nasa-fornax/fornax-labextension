@@ -41,8 +41,8 @@ describe('Fornax Commands', () => {
       // Call the function with the mocked launcher
       addLauncherItems(mockLauncher);
 
-      // Expect the 'add' method to have been called 3 times
-      expect(mockAdd).toHaveBeenCalledTimes(3);
+      // Expect the 'add' method to have been called 4 times
+      expect(mockAdd).toHaveBeenCalledTimes(4);
 
       // Optional: You can also check the arguments if needed
       expect(mockAdd).toHaveBeenCalledWith(
@@ -53,6 +53,9 @@ describe('Fornax Commands', () => {
       );
       expect(mockAdd).toHaveBeenCalledWith(
         expect.objectContaining({ command: 'fornax:discourse' })
+      );
+      expect(mockAdd).toHaveBeenCalledWith(
+        expect.objectContaining({ command: 'fornax:introduction' })
       );
     });
   });
