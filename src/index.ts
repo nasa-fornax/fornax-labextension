@@ -10,7 +10,7 @@ import { html5Icon } from '@jupyterlab/ui-components';
 import {
   CreateNavCommands,
   addLauncherItems,
-  addReleaseNotesCommand,
+  addFilesLinksCommands,
   addUpdateNotebooksCommand
 } from './commands';
 import { removeNBKernels } from './kernels';
@@ -104,7 +104,7 @@ function activateFornaxExtension(
   CreateNavCommands(COMMAND_CATEGORY, palette, app);
 
   // Add 'Release Notes' command to the palette
-  addReleaseNotesCommand(app, palette, COMMAND_CATEGORY);
+  addFilesLinksCommands(app, palette, COMMAND_CATEGORY);
 
   // Add 'Update Notebooks' command to the palette
   addUpdateNotebooksCommand(app, palette, COMMAND_CATEGORY);

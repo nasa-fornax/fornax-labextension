@@ -38,6 +38,9 @@
             }
           },
           {
+            "command": "fornax:introduction"
+          },
+          {
             "command": "fornax:container-release-notes"
           }
         ]

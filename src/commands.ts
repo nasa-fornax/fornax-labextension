@@ -135,6 +135,11 @@ Input:
 export function addLauncherItems(launcher: ILauncher) {
   // add link to user guide
   launcher.add({
+    command: 'fornax:introduction',
+    category: 'Fornax',
+    rank: -1002
+  });
+  launcher.add({
     command: 'fornax:dashboard',
     category: 'Fornax',
     rank: -1001
@@ -157,43 +162,64 @@ export function addLauncherItems(launcher: ILauncher) {
  * @param palette - Command palette to add the command to
  * @param category - Category for the command palette
  */
-export function addReleaseNotesCommand(
+export function addFilesLinksCommands(
   app: JupyterFrontEnd,
   palette?: ICommandPalette,
   category?: string
 ): void {
-  const commandId = 'fornax:container-release-notes';
-  const label = 'Release Notes';
-  const htmlFilePath = 'fornax-notebooks/introduction.html';
-  const widget = new Widget();
-  widget.node.innerHTML = `
-    See the <a href="https://github.com/nasa-fornax/fornax-images/blob/develop/introduction.md">Release Notes</a> on github for more information.
-  `;
-  app.commands.addCommand(commandId, {
-    label: label,
-    execute: async () => {
-      try {
-        // Use JupyterLab's built-in document manager to open the HTML file
-        await app.commands.execute('docmanager:open', {
-          path: htmlFilePath
-        });
-      } catch (error) {
-        console.error('Error opening HTML file:', error);
-        await showDialog({
-          title: 'Release Notes on GitHub',
-          body: widget as unknown as Dialog.IBodyWidget,
-          buttons: [Dialog.okButton({ label: 'Close' })]
-        });
-      }
+  type Links = {
+    commandId: string;
+    label: string;
+    htmlFilePath: string;
+    remoteUrl: string;
+  };
+  const links: Links[] = [
+    {
+      commandId: 'fornax:container-release-notes',
+      label: 'Release Notes',
+      htmlFilePath: 'fornax-notebooks/changes.html',
+      remoteUrl:
+        'https://github.com/nasa-fornax/fornax-images/blob/main/changes.md'
+    },
+    {
+      commandId: 'fornax:introduction',
+      label: 'Introduction',
+      htmlFilePath: 'fornax-notebooks/introduction.html',
+      remoteUrl:
+        'https://github.com/nasa-fornax/fornax-images/blob/main/introduction.md'
     }
-  });
-
-  // Add to command palette if provided
-  if (palette && category) {
-    palette.addItem({
-      command: commandId,
-      category: category
+  ];
+  for (const link of links) {
+    const widget = new Widget();
+    widget.node.innerHTML = `
+      See the <a href="${link.remoteUrl}">${link.label}</a> on github for more information.
+    `;
+    app.commands.addCommand(link.commandId, {
+      label: link.label,
+      execute: async () => {
+        try {
+          // Use JupyterLab's built-in document manager to open the HTML file
+          await app.commands.execute('docmanager:open', {
+            path: link.htmlFilePath
+          });
+        } catch (error) {
+          console.error('Error opening HTML file:', error);
+          await showDialog({
+            title: `${link.label} on GitHub`,
+            body: widget as unknown as Dialog.IBodyWidget,
+            buttons: [Dialog.okButton({ label: 'Close' })]
+          });
+        }
+      }
     });
+
+    // Add to command palette if provided
+    if (palette && category) {
+      palette.addItem({
+        command: link.commandId,
+        category: category
+      });
+    }
   }
 }
 
