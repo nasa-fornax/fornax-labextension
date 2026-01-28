@@ -7,7 +7,7 @@ import { ILauncher } from '@jupyterlab/launcher';
 import { HTMLViewerFactory } from '@jupyterlab/htmlviewer';
 import { html5Icon, markdownIcon } from '@jupyterlab/ui-components';
 import { MarkdownViewerFactory } from '@jupyterlab/markdownviewer';
-import {IRenderMimeRegistry} from '@jupyterlab/rendermime';
+import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 
 import {
   CreateNavCommands,
@@ -68,7 +68,10 @@ export function changeOpenTarget() {
 /* Add custom file types and viewers
 htm: for XMM help files
 */
-export function addCustomFileTypes(app: JupyterFrontEnd, rendermime: IRenderMimeRegistry) {
+export function addCustomFileTypes(
+  app: JupyterFrontEnd,
+  rendermime: IRenderMimeRegistry
+) {
   app.docRegistry.addFileType({
     name: 'htm',
     contentType: 'file',
