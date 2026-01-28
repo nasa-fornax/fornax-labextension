@@ -1,6 +1,6 @@
 {
     "name": "fornax-labextension",
-    "version": "0.1.12",
+    "version": "0.1.13",
     "description": "A JupyterLab extension for Fornax",
     "keywords": [
         "jupyter",
@@ -60,7 +60,8 @@
         "@jupyterlab/application": "^4.5.1",
         "@jupyterlab/apputils": "^4.5.1",
         "@jupyterlab/htmlviewer": "^4.5.1",
-        "@jupyterlab/launcher": "^4.5.1"
+        "@jupyterlab/launcher": "^4.5.1",
+        "@jupyterlab/markdownviewer": "^4.5.1"
     },
     "devDependencies": {
         "@jupyterlab/builder": "^4.0.0",

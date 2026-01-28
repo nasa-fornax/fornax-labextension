@@ -5,7 +5,9 @@ import {
 import { ICommandPalette } from '@jupyterlab/apputils';
 import { ILauncher } from '@jupyterlab/launcher';
 import { HTMLViewerFactory } from '@jupyterlab/htmlviewer';
-import { html5Icon } from '@jupyterlab/ui-components';
+import { html5Icon, markdownIcon } from '@jupyterlab/ui-components';
+import { MarkdownViewerFactory } from '@jupyterlab/markdownviewer';
+import {IRenderMimeRegistry} from '@jupyterlab/rendermime';
 
 import {
   CreateNavCommands,
@@ -66,7 +68,7 @@ export function changeOpenTarget() {
 /* Add custom file types and viewers
 htm: for XMM help files
 */
-export function addCustomFileTypes(app: JupyterFrontEnd) {
+export function addCustomFileTypes(app: JupyterFrontEnd, rendermime: IRenderMimeRegistry) {
   app.docRegistry.addFileType({
     name: 'htm',
     contentType: 'file',
@@ -82,6 +84,28 @@ export function addCustomFileTypes(app: JupyterFrontEnd) {
     defaultFor: ['htm']
   });
   app.docRegistry.addWidgetFactory(factory);
+
+  // jupytext makes .md files open a kernel; we don't want that sometimes;
+  // We add a custom .mdv extension to open with the standard markdown viewer.
+  app.docRegistry.addFileType({
+    name: 'fornax-markdown-view',
+    contentType: 'file',
+    fileFormat: 'text',
+    displayName: 'Markdown Viewer',
+    extensions: ['.mdv'],
+    mimeTypes: ['text/markdown'],
+    icon: markdownIcon
+  });
+  // Register a Markdown Viewer factory for .mdview
+  const mdviewFileType = app.docRegistry.getFileType('fornax-markdown-view');
+  const mdviewFactory = new MarkdownViewerFactory({
+    name: 'Markdown Viewer',
+    fileTypes: ['fornax-markdown-view'],
+    defaultFor: ['fornax-markdown-view'],
+    primaryFileType: mdviewFileType,
+    rendermime: rendermime
+  });
+  app.docRegistry.addWidgetFactory(mdviewFactory);
 }
 
 /*
@@ -92,7 +116,8 @@ Activate the extension
 function activateFornaxExtension(
   app: JupyterFrontEnd,
   palette: ICommandPalette,
-  launcher: ILauncher
+  launcher: ILauncher,
+  rendermime: IRenderMimeRegistry
 ) {
   console.log('JupyterLab extension fornax-labextension is activated!');
 
@@ -120,7 +145,7 @@ function activateFornaxExtension(
   changeOpenTarget();
 
   // add mime types
-  addCustomFileTypes(app);
+  addCustomFileTypes(app, rendermime);
 }
 
 /**
@@ -130,7 +155,7 @@ const fornaxExtension: JupyterFrontEndPlugin<void> = {
   id: PLUGIN_ID,
   description: 'A JupyterLab extension for Fornax',
   autoStart: true,
-  requires: [ICommandPalette, ILauncher],
+  requires: [ICommandPalette, ILauncher, IRenderMimeRegistry],
   activate: activateFornaxExtension
 };
 

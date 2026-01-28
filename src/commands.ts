@@ -177,14 +177,14 @@ export function addFilesLinksCommands(
     {
       commandId: 'fornax:container-release-notes',
       label: 'Release Notes',
-      filePath: 'fornax-notebooks/changes.md',
+      filePath: 'fornax-notebooks/changes.mdv',
       remoteUrl:
         'https://github.com/nasa-fornax/fornax-images/blob/main/changes.md'
     },
     {
       commandId: 'fornax:introduction',
       label: 'Introduction',
-      filePath: 'fornax-notebooks/introduction.md',
+      filePath: 'fornax-notebooks/introduction.mdv',
       remoteUrl:
         'https://github.com/nasa-fornax/fornax-images/blob/main/introduction.md'
     }
@@ -201,7 +201,7 @@ export function addFilesLinksCommands(
           // Use JupyterLab's built-in document manager to open the HTML file
           await app.commands.execute('docmanager:open', {
             path: link.filePath,
-            factory: 'Markdown Preview'
+            factory: 'Markdown Viewer'
           });
         } catch (error) {
           console.error('Error opening HTML file:', error);
