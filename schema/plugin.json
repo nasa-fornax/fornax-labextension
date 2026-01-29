@@ -9,6 +9,12 @@
         "rank": 120,
         "items": [
           {
+            "command": "fornax:introduction"
+          },
+          {
+            "command": "fornax:container-release-notes"
+          },
+          {
             "command": "fornax:dashboard"
           },
           {
@@ -36,12 +42,6 @@
                 }
               ]
             }
-          },
-          {
-            "command": "fornax:introduction"
-          },
-          {
-            "command": "fornax:container-release-notes"
           }
         ]
       }
