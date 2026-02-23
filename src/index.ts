@@ -13,7 +13,7 @@ import {
   CreateNavCommands,
   addLauncherItems,
   addFilesLinksCommands,
-  addUpdateNotebooksCommand
+  // addUpdateNotebooksCommand
 } from './commands';
 import { removeNBKernels } from './kernels';
 
@@ -135,7 +135,8 @@ function activateFornaxExtension(
   addFilesLinksCommands(app, palette, COMMAND_CATEGORY);
 
   // Add 'Update Notebooks' command to the palette
-  addUpdateNotebooksCommand(app, palette, COMMAND_CATEGORY);
+  // DISABLED in 0.1.16 to avoid environment confusion
+  // addUpdateNotebooksCommand(app, palette, COMMAND_CATEGORY);
 
   // Add Fornax Launcher items //
   addLauncherItems(launcher);
