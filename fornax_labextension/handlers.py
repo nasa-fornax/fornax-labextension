@@ -11,8 +11,8 @@ from tornado.web import HTTPError
 
 
 def update_notebooks():
-    """Script to update the notebooks by calling the update-notebooks.sh script.
-    
+    """Script to update the notebooks by calling update-notebooks.sh.
+
     Return
     (success, message)
     """
@@ -51,7 +51,7 @@ class UpdateNotebooksHandler(APIHandler):
         """Execute update-notebooks.sh script to update notebooks."""
         # a catch block for handling errors
         try:
-            self.log.info(f"fornax-labextension: Updating notebooks ...")
+            self.log.info("fornax-labextension: Updating notebooks ...")
             status, message = update_notebooks()
             if status:
                 response = {
@@ -64,10 +64,11 @@ class UpdateNotebooksHandler(APIHandler):
                     'success': False,
                     'message': 'Notebooks update failed',
                 }
-                self.log.error(f"fornax-labextension: {response['message']}\n {message}")
+                self.log.error(
+                    f"fornax-labextension: {response['message']}\n {message}")
 
             self.finish(json.dumps(response))
-            
+
         except Exception as e:
             self.log.error(f"Error in update notebooks handler: {str(e)}")
             raise HTTPError(500, f"Internal server error: {str(e)}")
@@ -76,9 +77,10 @@ class UpdateNotebooksHandler(APIHandler):
 def setup_handlers(web_app):
     """Setup the API handlers."""
     host_pattern = ".*$"
-    
+
     base_url = web_app.settings["base_url"]
     handlers = [
-        (url_path_join(base_url, "fornax-labextension", "update-notebooks"), UpdateNotebooksHandler)
+        (url_path_join(base_url, "fornax-labextension", "update-notebooks"),
+         UpdateNotebooksHandler)
     ]
     web_app.add_handlers(host_pattern, handlers)
