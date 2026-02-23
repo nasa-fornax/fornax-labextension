@@ -196,6 +196,7 @@ export function addFilesLinksCommands(
     `;
     app.commands.addCommand(link.commandId, {
       label: link.label,
+      icon: fornaxIcon,
       execute: async () => {
         try {
           // Use JupyterLab's built-in document manager to open the HTML file
