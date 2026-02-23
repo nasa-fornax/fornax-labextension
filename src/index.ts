@@ -12,7 +12,7 @@ import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 import {
   CreateNavCommands,
   addLauncherItems,
-  addFilesLinksCommands,
+  addFilesLinksCommands
   // addUpdateNotebooksCommand
 } from './commands';
 import { removeNBKernels } from './kernels';
