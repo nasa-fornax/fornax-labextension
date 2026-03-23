@@ -22,12 +22,13 @@ async def update_last_activity(settings, logger, percent_min=70):
     sep = '\n    '
     if isactive:
         now = utcnow()
-        settings['last_activity_times']['cpu-activity'] = now
-        text += f'{sep}activity updated to: {now}'
-    # log all settings that have 'activity' in the key
-    for key in settings.keys():
-        if 'activity' in key:
-            text += f'{sep}{key}: {settings[key]}'
+        settings['last_activity_times']['cpu-activity'] = f'{now}'
+        # prevent terminals from culling if we have activity
+        terms = settings.get("terminal_manager")
+        for term in terms.terminals.values():
+            term.last_activity = now
+            settings['terminal_last_activity'] = f'{now}'
+        text += f'{sep}activity updated to (inc terminals): {now}'
     logger.info(text)
 
 
