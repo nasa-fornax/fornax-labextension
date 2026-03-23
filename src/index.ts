@@ -12,7 +12,8 @@ import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 import {
   CreateNavCommands,
   addLauncherItems,
-  addFilesLinksCommands
+  addFilesLinksCommands,
+  addLauncherStyles
   // addUpdateNotebooksCommand
 } from './commands';
 import { removeNBKernels } from './kernels';
@@ -140,6 +141,7 @@ function activateFornaxExtension(
 
   // Add Fornax Launcher items //
   addLauncherItems(launcher);
+  addLauncherStyles(app);
 
   // Create Wrappers around keep-alive commands so we can
   // have custom labels

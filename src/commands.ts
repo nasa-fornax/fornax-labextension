@@ -156,6 +156,47 @@ export function addLauncherItems(launcher: ILauncher) {
   });
 }
 
+/*
+Add Launcher styles. Ensures the order from css is used
+Input:
+  - app: JupyterFrontEnd
+*/
+export function addLauncherStyles(app: JupyterFrontEnd) {
+  app.restored.then(() => {
+
+  const tagSections = (): void => {
+    document.querySelectorAll('.jp-Launcher-sectionTitle').forEach(title => {
+      const section = title.closest('.jp-Launcher-section');
+      if (section && title.textContent) {
+        section.setAttribute('data-section', title.textContent.trim());
+      }
+    });
+  };
+
+  // Tag on load
+  tagSections();
+
+  // Re-tag whenever the launcher re-renders
+  const observer = new MutationObserver((mutations) => {
+    const launcherAffected = mutations.some(m =>
+      Array.from(m.addedNodes).some(n =>
+        (n as Element).classList?.contains('jp-Launcher-section') ||
+        (n as Element).querySelector?.('.jp-Launcher-section')
+      )
+    );
+    if (launcherAffected) {
+      tagSections();
+    }
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  });
+}
+
 /**
  * Create a command that opens an HTML file in the JupyterLab interface
  * @param app - The JupyterFrontEnd application

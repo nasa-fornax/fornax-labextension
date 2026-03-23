@@ -1,5 +1,276 @@
-/*
-    See the JupyterLab Developer Guide for useful CSS Patterns:
+/* ================================================================
+   Custom Launcher: Compact 3-Column List View
+   - Three sections side by side
+   - Each section: scrollable list of small icon + label rows
+   ================================================================ */
 
-    https://jupyterlab.readthedocs.io/en/stable/developer/css.html
-*/
+
+/* ── 1. CONTENT AREA: 3-column grid ───────────────────────────── */
+
+.jp-Launcher-content {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Wrap all sections in a 3-column grid */
+.jp-Launcher-content > .jp-Launcher-cwd {
+  margin-bottom: 8px;
+}
+
+/* Group all jp-Launcher-section into a 3-col grid */
+.jp-Launcher-section {
+  /* Will be laid out by the grid wrapper below */
+  margin-bottom: 0;
+  border: 1px solid var(--jp-border-color2);
+  border-radius: 4px;
+  overflow: hidden;
+  min-width: 0;                      /* prevent grid blowout */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* The trick: use a CSS grid on the parent via a pseudo-wrapper.
+   Since we can't add a wrapper div via CSS alone, we use
+   display:grid on jp-Launcher-content and place cwd + sections */
+
+.jp-Launcher-content {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 10px;
+  align-items: stretch;
+  padding: 16px !important;
+}
+
+/* CWD header spans all 3 columns */
+.jp-Launcher-cwd {
+  grid-column: 1 / -1;              /* span full width */
+  margin-bottom: 0;
+}
+
+
+/* ── 2. CARD CONTAINER: scrollable column ─────────────────────── */
+
+.jp-Launcher-cardContainer {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  flex: 1;
+  max-height: 220px;                 /* scroll after ~7 items */
+  overflow-y: auto;
+  overflow-x: hidden;
+  gap: 0 !important;
+  scrollbar-width: thin;
+  scrollbar-color: var(--jp-border-color2) transparent;
+}
+
+.jp-Launcher-cardContainer::-webkit-scrollbar {
+  width: 4px;
+}
+
+.jp-Launcher-cardContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.jp-Launcher-cardContainer::-webkit-scrollbar-thumb {
+  background-color: var(--jp-border-color2);
+  border-radius: 2px;
+}
+
+
+/* ── 3. CARDS: horizontal row layout ──────────────────────────── */
+
+.jp-LauncherCard {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+
+  width: 100% !important;
+  min-width: unset !important;
+  max-width: unset !important;
+
+  height: 28px !important;
+  min-height: 28px !important;
+
+  padding: 0 8px !important;
+  margin: 0 !important;
+  gap: 8px !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  text-align: left !important;
+
+  transition: background-color 0.15s ease;
+  cursor: pointer;
+}
+
+.jp-LauncherCard:hover {
+  background-color: var(--jp-layout-color3) !important;
+  box-shadow: none !important;
+}
+
+.jp-LauncherCard:active {
+  background-color: var(--jp-layout-color4) !important;
+}
+
+/* Row separators */
+.jp-LauncherCard + .jp-LauncherCard {
+  border-top: 1px solid var(--jp-border-color3) !important;
+}
+
+
+/* ── 4. ICON: small and fixed ─────────────────────────────────── */
+
+.jp-LauncherCard-icon {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  min-height: 16px !important;
+  flex-shrink: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden;
+}
+
+/* Kernel img icons */
+.jp-LauncherCard-icon img.jp-Launcher-kernelIcon {
+  width: 16px !important;
+  height: 16px !important;
+  object-fit: contain;
+}
+
+/* SVG icon wrappers — target by structure, not hashed class */
+.jp-LauncherCard-icon > div {
+  width: 16px !important;
+  height: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+
+.jp-LauncherCard-icon > div > svg {
+  width: 16px !important;
+  height: 16px !important;
+  flex-shrink: 0;
+}
+
+
+/* ── 5. LABEL ─────────────────────────────────────────────────── */
+
+.jp-LauncherCard-label {
+  flex: 1 !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.jp-LauncherCard-label p {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: var(--jp-ui-font-size1) !important;
+  line-height: 28px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  color: var(--jp-ui-font-color1) !important;
+  text-align: left !important;
+  width: 100% !important;
+}
+
+
+/* ── 6. SECTION HEADER ────────────────────────────────────────── */
+
+.jp-Launcher-sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px 4px 8px;
+  border-bottom: 1px solid var(--jp-border-color2);
+  position: sticky;
+  top: 0;
+  background: var(--jp-layout-color2);
+  z-index: 1;
+}
+
+/* Section header icon */
+.jp-Launcher-sectionHeader > div > svg {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.jp-Launcher-sectionTitle {
+  font-size: var(--jp-ui-font-size2) !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.4 !important;
+  color: var(--jp-ui-font-color1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* ── 7. RESPONSIVE: collapse to 2 or 1 col on narrow panels ───── */
+
+@media (max-width: 700px) {
+  .jp-Launcher-content {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .jp-Launcher-content {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Row 1: Notebook and Fornax side by side, each taking half width */
+.jp-Launcher-section[data-section="Fornax"] {
+  order: 1;
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.jp-Launcher-section[data-section="Notebook"] {
+  order: 2;
+  grid-column: 2;
+  grid-row: 2;        /* row 2 because row 1 is the cwd header */
+}
+
+/* Row 2: Console, Other, Jupytext across 3 columns */
+.jp-Launcher-section[data-section="Console"] {
+  order: 3;
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.jp-Launcher-section[data-section="Other"] {
+  order: 4;
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.jp-Launcher-section[data-section="Jupytext"] {
+  order: 5;
+  grid-column: 3;
+  grid-row: 3;
+}
+
+/* Any unknown future sections */
+.jp-Launcher-section:not([data-section]) {
+  order: 99;
+}
