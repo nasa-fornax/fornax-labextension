@@ -31,8 +31,8 @@ def _jupyter_server_extension_points():
 
 def _load_jupyter_server_extension(server_app):
     """Load the Jupyter Server extension."""
-    from .handlers import setup_handlers
+    from .activity import setup_activity_tracker
 
-    setup_handlers(server_app.web_app)
+    setup_activity_tracker(server_app)
     name = "fornax_labextension"
     server_app.log.info(f"Registered {name} server extension")
