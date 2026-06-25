@@ -50,12 +50,13 @@ force them to open in _top target
 export function changeOpenTarget() {
   const origOpen = window.open;
   (window as any).open = function (
-    url: string,
+    url?: string,
     target?: string,
     features?: string
   ) {
     if (
       (!target || target === '_blank') &&
+      typeof url === 'string' && // Add a safety check to ensure 'url' is a string
       (url.includes('hub/home') ||
         url.includes('hub/logout') ||
         url.includes('hub/spawn'))
