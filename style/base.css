@@ -183,7 +183,7 @@
   top: 0;
   background: var(--jp-brand-color3);
   z-index: 1;
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 /* Section header icon */
