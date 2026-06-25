@@ -81,7 +81,7 @@
   height: 28px !important;
   min-height: 28px !important;
   padding: 0 8px !important;
-  margin: 0 !important;
+  margin: 2px !important;
   gap: 8px !important;
   border: none !important;
   border-radius: 0 !important;
@@ -109,10 +109,10 @@
 /* ── 4. ICON: small and fixed ─────────────────────────────────── */
 
 .jp-LauncherCard-icon {
-  width: 16px !important;
-  height: 16px !important;
-  min-width: 16px !important;
-  min-height: 16px !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
   flex-shrink: 0 !important;
   display: flex !important;
   align-items: center !important;
@@ -124,15 +124,15 @@
 
 /* Kernel img icons */
 .jp-LauncherCard-icon img.jp-Launcher-kernelIcon {
-  width: 16px !important;
-  height: 16px !important;
+  width: 18px !important;
+  height: 18px !important;
   object-fit: contain;
 }
 
 /* SVG icon wrappers — target by structure, not hashed class */
 .jp-LauncherCard-icon > div {
-  width: 16px !important;
-  height: 16px !important;
+  width: 18px !important;
+  height: 18px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -140,8 +140,8 @@
 }
 
 .jp-LauncherCard-icon > div > svg {
-  width: 16px !important;
-  height: 16px !important;
+  width: 18px !important;
+  height: 18px !important;
   flex-shrink: 0;
 }
 
@@ -161,7 +161,7 @@
 .jp-LauncherCard-label p {
   margin: 0 !important;
   padding: 0 !important;
-  font-size: var(--jp-ui-font-size1) !important;
+  font-size: var(--jp-ui-font-size2) !important;
   line-height: 28px !important;
   white-space: nowrap !important;
   overflow: hidden !important;
@@ -181,14 +181,15 @@
   border-bottom: 1px solid var(--jp-border-color2);
   position: sticky;
   top: 0;
-  background: var(--jp-layout-color2);
+  background: var(--jp-brand-color3);
   z-index: 1;
+  margin-left: 0px;
 }
 
 /* Section header icon */
 .jp-Launcher-sectionHeader > div > svg {
-  width: 14px !important;
-  height: 14px !important;
+  width: 20px !important;
+  height: 20px !important;
 }
 
 .jp-Launcher-sectionTitle {
