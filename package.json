@@ -1,6 +1,6 @@
 {
     "name": "fornax-labextension",
-    "version": "0.1.19",
+    "version": "0.1.20",
     "description": "A JupyterLab extension for Fornax",
     "keywords": [
         "jupyter",
