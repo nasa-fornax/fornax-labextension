@@ -51,7 +51,6 @@
   flex-flow: column nowrap !important;
   flex: 1;
   max-height: 360px;
-  min-height: 200px;
   overflow: hidden auto;
   gap: 0 !important;
   scrollbar-width: thin;
