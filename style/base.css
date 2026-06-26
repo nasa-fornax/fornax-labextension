@@ -252,7 +252,7 @@
 }
 
 .jp-Launcher-section[data-section='Jupytext'] {
-  display: none
+  display: none;
 }
 
 .jp-Launcher-section[data-section='Firefly'] {
