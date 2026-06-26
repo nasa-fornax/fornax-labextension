@@ -6,10 +6,9 @@
 
 /* ── 1. CONTENT AREA: 3-column grid ───────────────────────────── */
 
-/* CWD header spans all 3 columns */
+/* remove cwd header */
 .jp-Launcher-cwd {
-  grid-column: 1 / -1; /* span full width */
-  margin-bottom: 0;
+  display: none;
 }
 
 /* Wrap all sections in a 3-column grid */
