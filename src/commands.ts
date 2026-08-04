@@ -223,7 +223,7 @@ export function addFilesLinksCommands(
     },
     {
       commandId: 'fornax:introduction',
-      label: 'Introduction',
+      label: 'Tutorials',
       filePath: 'fornax-notebooks/introduction.mdv',
       remoteUrl:
         'https://github.com/nasa-fornax/fornax-images/blob/main/introduction.md'
