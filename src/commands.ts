@@ -1,5 +1,5 @@
 import { JupyterFrontEnd } from '@jupyterlab/application';
-import { ICommandPalette, showDialog, Dialog } from '@jupyterlab/apputils';
+import { ICommandPalette, showDialog, Dialog, IFrame, MainAreaWidget } from '@jupyterlab/apputils';
 import { LabIcon } from '@jupyterlab/ui-components';
 import { PageConfig } from '@jupyterlab/coreutils';
 import { ILauncher } from '@jupyterlab/launcher';
@@ -25,6 +25,7 @@ export interface INavCommandOptions {
   diag_body: string | null;
   target?: string;
   icon: LabIcon | undefined;
+  inLabTab?: boolean;
 }
 
 // List of navigation items //
@@ -331,3 +332,86 @@ export function addUpdateNotebooksCommand(
     });
   }
 }
+
+// ---- For adding links/commands to external urls --- //
+// Define the properties for a Web Tab command
+export interface IWebTabOptions {
+  id: string;
+  label: string;
+  url: string;
+  launcher_gategory?: string
+  rank?: number; // Optional: controls the position in the launcher
+}
+
+/**
+ * Generic function to create a command that opens a URL in a JupyterLab tab
+ */
+export function createWebTabCommand(
+  app: JupyterFrontEnd,
+  palette: ICommandPalette,
+  launcher: ILauncher,
+  category: string,
+  options: IWebTabOptions
+): void {
+  app.commands.addCommand(options.id, {
+    label: options.label,
+    icon: fornaxIcon,
+    execute: () => {
+      // 1. Create an IFrame pointing to the URL
+      const iframe = new IFrame();
+      iframe.url = options.url;
+      
+      // 2. Wrap it in a MainAreaWidget
+      const widget = new MainAreaWidget({ content: iframe });
+      widget.id = `${options.id}-${Date.now()}`; // Ensure unique ID if opened multiple times
+      widget.title.label = options.label;
+      widget.title.icon = fornaxIcon;
+      widget.title.closable = true;
+
+      // 3. Attach it to the main lab area
+      app.shell.add(widget, 'main');
+    }
+  });
+
+  // Add to command palette
+  palette.addItem({
+    command: options.id,
+    category: category
+  });
+
+  // Add to launcher
+  launcher.add({
+    command: options.id,
+    category: options.launcher_gategory ?? 'Tools', 
+    rank: options.rank ?? -800
+  });
+}
+
+/**
+ * Iterate through your custom URLs and register them using the generic function
+ */
+export function addCustomWebTabs(
+  app: JupyterFrontEnd,
+  palette: ICommandPalette,
+  launcher: ILauncher,
+  category: string
+): void {
+  
+  // ADD ALL YOUR CUSTOM URLS HERE
+  const customTabs: IWebTabOptions[] = [
+    {
+      id: 'fornax:web-tab-mast-schema',
+      label: 'MAST schema browser',
+      url: 'https://mast.stsci.edu/schema_browser/#/',
+      launcher_gategory: 'Tools',
+      rank: -100
+    }
+    // Just add more objects here as needed!
+  ];
+
+  // Loop through and create a command/tab for each one
+  customTabs.forEach(tab => {
+    createWebTabCommand(app, palette, launcher, category, tab);
+  });
+}
+// --------------------------------------------------- //
