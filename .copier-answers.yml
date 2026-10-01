@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
-_commit: v4.5.1
+_commit: v4.6.5
 _src_path: https://github.com/jupyterlab/extension-template
 author_email: team@fornax
 author_name: Fornax Team
@@ -10,6 +10,6 @@ kind: frontend
 labextension_name: fornax-labextension
 project_short_description: A JupyterLab extension for Fornax
 python_name: fornax_labextension
-repository: ''
+repository: https://github.com/nasa-fornax/fornax-labextension
 test: true
 
