@@ -1,3 +1,5 @@
+// Copyright 2026, University of Maryland, All Rights Reserved
+
 import { JupyterFrontEnd } from '@jupyterlab/application';
 import { ICommandPalette, showDialog, Dialog, IFrame, MainAreaWidget } from '@jupyterlab/apputils';
 import { LabIcon } from '@jupyterlab/ui-components';

@@ -1,3 +1,5 @@
+# Copyright 2026, University of Maryland, All Rights Reserved
+
 import os
 from jupyter_server._tz import utcnow
 from tornado.ioloop import PeriodicCallback
@@ -43,12 +45,13 @@ async def update_last_activity(settings, logger, percent_min=70):
     # --- Get Top 3 CPU Consuming Processes ---
     if isactive:
         text += f'{sep}====== Top CPU Consuming Commands: ======='
-        
+
         # Initialize the CPU percent counter for all processes
         for proc in psutil.process_iter():
             try:
                 proc.cpu_percent(interval=None)
-            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            except (psutil.NoSuchProcess, psutil.AccessDenied,
+                    psutil.ZombieProcess):
                 pass
 
         # Yield control back to the event loop for 100ms to measure CPU time
@@ -61,17 +64,20 @@ async def update_last_activity(settings, logger, percent_min=70):
                 cpu_usage = proc.cpu_percent(interval=None)
                 cmd = proc.info['cmdline']
                 cmd_str = " ".join(cmd) if cmd else proc.info['name']
-                
+
                 procs.append({
                     'pid': proc.info['pid'],
                     'command': cmd_str,
                     'cpu_percent': cpu_usage
                 })
-            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            except (psutil.NoSuchProcess, psutil.AccessDenied,
+                    psutil.ZombieProcess):
                 pass
 
-        # Sort by highest CPU usage, grab the top 3, and append them to the log text
-        top_cpu = sorted(procs, key=lambda p: p['cpu_percent'], reverse=True)[:3]
+        # Sort by highest CPU usage, grab the top 3, and append them to
+        # the log text
+        top_cpu = sorted(
+            procs, key=lambda p: p['cpu_percent'], reverse=True)[:3]
         for i, p_info in enumerate(top_cpu, 1):
             # Truncate command to 80 characters so it doesn't flood the logs
             short_cmd = (

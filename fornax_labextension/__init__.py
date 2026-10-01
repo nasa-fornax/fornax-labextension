@@ -1,3 +1,5 @@
+# Copyright 2026, University of Maryland, All Rights Reserved
+
 try:
     from ._version import __version__
 except ImportError:
