@@ -1,7 +1,13 @@
 // Copyright 2026, University of Maryland, All Rights Reserved
 
 import { JupyterFrontEnd } from '@jupyterlab/application';
-import { ICommandPalette, showDialog, Dialog, IFrame, MainAreaWidget } from '@jupyterlab/apputils';
+import {
+  ICommandPalette,
+  showDialog,
+  Dialog,
+  IFrame,
+  MainAreaWidget
+} from '@jupyterlab/apputils';
 import { LabIcon } from '@jupyterlab/ui-components';
 import { PageConfig } from '@jupyterlab/coreutils';
 import { ILauncher } from '@jupyterlab/launcher';
@@ -341,7 +347,7 @@ export interface IWebTabOptions {
   id: string;
   label: string;
   url: string;
-  launcher_gategory?: string
+  launcher_gategory?: string;
   rank?: number; // Optional: controls the position in the launcher
 }
 
@@ -362,7 +368,7 @@ export function createWebTabCommand(
       // 1. Create an IFrame pointing to the URL
       const iframe = new IFrame();
       iframe.url = options.url;
-      
+
       // 2. Wrap it in a MainAreaWidget
       const widget = new MainAreaWidget({ content: iframe });
       widget.id = `${options.id}-${Date.now()}`; // Ensure unique ID if opened multiple times
@@ -384,7 +390,7 @@ export function createWebTabCommand(
   // Add to launcher
   launcher.add({
     command: options.id,
-    category: options.launcher_gategory ?? 'Tools', 
+    category: options.launcher_gategory ?? 'Tools',
     rank: options.rank ?? -800
   });
 }
@@ -398,7 +404,6 @@ export function addCustomWebTabs(
   launcher: ILauncher,
   category: string
 ): void {
-  
   // ADD ALL YOUR CUSTOM URLS HERE
   const customTabs: IWebTabOptions[] = [
     {
