@@ -367,7 +367,12 @@ export function createWebTabCommand(
     execute: () => {
       // 1. Create an IFrame pointing to the URL
       const iframe = new IFrame({
-        sandbox: ['allow-scripts', 'allow-same-origin', 'allow-popups', 'allow-forms'],
+        sandbox: [
+          'allow-scripts',
+          'allow-same-origin',
+          'allow-popups',
+          'allow-forms'
+        ]
       });
       iframe.url = options.url;
 
