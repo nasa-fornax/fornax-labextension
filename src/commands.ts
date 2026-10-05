@@ -347,7 +347,7 @@ export interface IWebTabOptions {
   id: string;
   label: string;
   url: string;
-  launcher_gategory?: string;
+  launcher_category?: string;
   rank?: number; // Optional: controls the position in the launcher
 }
 
@@ -366,7 +366,9 @@ export function createWebTabCommand(
     icon: fornaxIcon,
     execute: () => {
       // 1. Create an IFrame pointing to the URL
-      const iframe = new IFrame();
+      const iframe = new IFrame({
+        sandbox: ['allow-scripts', 'allow-same-origin', 'allow-popups', 'allow-forms'],
+      });
       iframe.url = options.url;
 
       // 2. Wrap it in a MainAreaWidget
@@ -390,7 +392,7 @@ export function createWebTabCommand(
   // Add to launcher
   launcher.add({
     command: options.id,
-    category: options.launcher_gategory ?? 'Tools',
+    category: options.launcher_category ?? 'Tools',
     rank: options.rank ?? -800
   });
 }
@@ -410,7 +412,7 @@ export function addCustomWebTabs(
       id: 'fornax:web-tab-mast-schema',
       label: 'MAST schema browser',
       url: 'https://mast.stsci.edu/schema_browser/#/',
-      launcher_gategory: 'Tools',
+      launcher_category: 'Tools',
       rank: -100
     }
     // Just add more objects here as needed!
