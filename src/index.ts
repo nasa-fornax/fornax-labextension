@@ -10,13 +10,16 @@ import { HTMLViewerFactory } from '@jupyterlab/htmlviewer';
 import { html5Icon, markdownIcon } from '@jupyterlab/ui-components';
 import { MarkdownViewerFactory } from '@jupyterlab/markdownviewer';
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
+import { INotebookTracker } from '@jupyterlab/notebook'; 
+
 
 import {
   CreateNavCommands,
   addLauncherItems,
   addFilesLinksCommands,
   addLauncherStyles,
-  addCustomWebTabs
+  addCustomWebTabs,
+  overrideSaveCommand
   // addUpdateNotebooksCommand
 } from './commands';
 import { removeNBKernels } from './kernels';
@@ -125,7 +128,8 @@ function activateFornaxExtension(
   app: JupyterFrontEnd,
   palette: ICommandPalette,
   launcher: ILauncher,
-  rendermime: IRenderMimeRegistry
+  rendermime: IRenderMimeRegistry,
+  tracker: INotebookTracker
 ) {
   console.log('JupyterLab extension fornax-labextension is activated!');
 
@@ -159,6 +163,9 @@ function activateFornaxExtension(
 
   // add mime types
   addCustomFileTypes(app, rendermime);
+
+  // Override the save command for read-only notebooks
+  overrideSaveCommand(app, tracker);
 }
 
 /**
@@ -168,7 +175,7 @@ const fornaxExtension: JupyterFrontEndPlugin<void> = {
   id: PLUGIN_ID,
   description: 'A JupyterLab extension for Fornax',
   autoStart: true,
-  requires: [ICommandPalette, ILauncher, IRenderMimeRegistry],
+  requires: [ICommandPalette, ILauncher, IRenderMimeRegistry, INotebookTracker],
   activate: activateFornaxExtension
 };
 

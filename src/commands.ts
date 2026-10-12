@@ -12,6 +12,7 @@ import { LabIcon } from '@jupyterlab/ui-components';
 import { PageConfig } from '@jupyterlab/coreutils';
 import { ILauncher } from '@jupyterlab/launcher';
 import { Widget } from '@lumino/widgets';
+import { INotebookTracker } from '@jupyterlab/notebook';
 
 import fornaxSvg from '../style/fornax.svg';
 import { executeUpdateNotebooks } from './handler';
@@ -429,3 +430,38 @@ export function addCustomWebTabs(
   });
 }
 // --------------------------------------------------- //
+
+/**
+ * Overrides the default save command to show a custom message for read-only notebooks
+ */
+export function overrideSaveCommand(
+  app: JupyterFrontEnd,
+  tracker: INotebookTracker
+): void {
+  const originalExecute = app.commands.execute.bind(app.commands);
+
+  app.commands.execute = async (id: string, args: any) => {
+    // Intercept the save command
+    if (id === 'docmanager:save') {
+      const currentWidget = tracker.currentWidget;
+
+      // Use contentsModel.writable to check file-system permissions from the server
+      const isWritable = currentWidget?.context?.contentsModel?.writable;
+
+      // Check if a notebook is active AND if it is read-only
+      if (currentWidget && isWritable === false) {
+        await showDialog({
+          title: 'Action Required: Read-Only Notebook',
+          body: 'This notebook is read-only. Use "Save as…" instead, and save it in your home directory but not in ~/fornax-notebooks to avoid losing your changes.',
+          buttons: [Dialog.okButton({ label: 'Understood' })]
+        });
+        
+        // Return early to bypass the default JupyterLab save popup
+        return;
+      }
+    }
+    
+    // For all other commands, proceed normally
+    return originalExecute(id, args);
+  };
+}
