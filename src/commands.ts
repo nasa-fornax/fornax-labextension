@@ -455,12 +455,12 @@ export function overrideSaveCommand(
           body: 'This notebook is read-only. Use "Save as…" instead, and save it in your home directory but not in ~/fornax-notebooks to avoid losing your changes.',
           buttons: [Dialog.okButton({ label: 'Understood' })]
         });
-        
+
         // Return early to bypass the default JupyterLab save popup
         return;
       }
     }
-    
+
     // For all other commands, proceed normally
     return originalExecute(id, args);
   };

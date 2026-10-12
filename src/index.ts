@@ -10,8 +10,7 @@ import { HTMLViewerFactory } from '@jupyterlab/htmlviewer';
 import { html5Icon, markdownIcon } from '@jupyterlab/ui-components';
 import { MarkdownViewerFactory } from '@jupyterlab/markdownviewer';
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
-import { INotebookTracker } from '@jupyterlab/notebook'; 
-
+import { INotebookTracker } from '@jupyterlab/notebook';
 
 import {
   CreateNavCommands,
