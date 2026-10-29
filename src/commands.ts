@@ -420,6 +420,41 @@ export function addCustomWebTabs(
       url: 'https://mast.stsci.edu/schema_browser/#/',
       launcher_category: 'Tools',
       rank: -100
+    },
+    {
+      id: 'fornax:web-tab-fornax-docs',
+      label: 'Fornax Documentation',
+      url: 'https://docs.fornax.sciencecloud.nasa.gov/',
+      launcher_category: 'Resources',
+      rank: -200
+    },
+    {
+      id: 'fornax:web-tab-fornax-nb',
+      label: 'Fornax Demo Notebooks (Rendered)',
+      url: 'https://nasa-fornax.github.io/fornax-demo-notebooks/',
+      launcher_category: 'Resources',
+      rank: -199
+    },
+    {
+      id: 'fornax:web-tab-irsa-nb',
+      label: 'IRSA Tutorials (Rendered)',
+      url: 'https://caltech-ipac.github.io/irsa-tutorials/',
+      launcher_category: 'Resources',
+      rank: -198
+    },
+    {
+      id: 'fornax:web-tab-heasarc-nb',
+      label: 'HEASARC Tutorials (Rendered)',
+      url: 'https://heasarc.github.io/heasarc-tutorials/',
+      launcher_category: 'Resources',
+      rank: -197
+    },
+    {
+      id: 'fornax:web-tab-mast-nb',
+      label: 'MAST Tutorials (Rendered)',
+      url: 'https://spacetelescope.github.io/mast_notebooks/intro.html',
+      launcher_category: 'Resources',
+      rank: -196
     }
     // Just add more objects here as needed!
   ];
