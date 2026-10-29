@@ -80,12 +80,8 @@ async def update_last_activity(settings, logger, percent_min=70):
             procs, key=lambda p: p['cpu_percent'], reverse=True)[:3]
         for i, p_info in enumerate(top_cpu, 1):
             # Truncate command to 80 characters so it doesn't flood the logs
-            short_cmd = (
-                p_info['command'][:80] + '...'
-                if len(p_info['command']) > 80 else p_info['command']
-            )
             text += (f"{sep}{i}. CPU: {p_info['cpu_percent']:>5.1f}% | "
-                     f"PID: {p_info['pid']:<6} | Cmd: {short_cmd}")
+                     f"PID: {p_info['pid']:<6} | Cmd: {p_info['command']}")
 
     # Log the final assembled text
     logger.info(text)
