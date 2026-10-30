@@ -4,8 +4,12 @@ import { IFrame, MainAreaWidget } from '@jupyterlab/apputils';
 
 interface MySTSearchItem {
   hierarchy?: {
-    lvl1?: string; lvl2?: string; lvl3?: string;
-    lvl4?: string; lvl5?: string; lvl6?: string;
+    lvl1?: string;
+    lvl2?: string;
+    lvl3?: string;
+    lvl4?: string;
+    lvl5?: string;
+    lvl6?: string;
   };
   type: string;
   url: string;
@@ -15,20 +19,20 @@ interface MySTSearchItem {
 export class DocsSearchWidget extends Widget {
   private searchInput: HTMLInputElement;
   private resultsList: HTMLUListElement;
-  
+
   private searchIndex: MySTSearchItem[] = [];
   private isIndexLoaded = false;
   private fetchPromise: Promise<boolean> | null = null;
-  
+
   private app: JupyterFrontEnd;
-  private docsWidget: MainAreaWidget<IFrame> | null = null; 
+  private docsWidget: MainAreaWidget<IFrame> | null = null;
 
   constructor(app: JupyterFrontEnd) {
     super();
-    this.app = app; 
-    
+    this.app = app;
+
     this.id = 'fornax-docs-top-search';
-    
+
     // Base widget styling for the Top Bar
     this.node.style.display = 'flex';
     this.node.style.alignItems = 'center';
@@ -39,7 +43,7 @@ export class DocsSearchWidget extends Widget {
     this.searchInput = document.createElement('input');
     this.searchInput.type = 'text';
     this.searchInput.placeholder = 'Search Fornax Docs...';
-    
+
     // Size and padding
     this.searchInput.style.width = '250px';
     this.searchInput.style.padding = '4px 8px';
@@ -50,14 +54,14 @@ export class DocsSearchWidget extends Widget {
     this.searchInput.style.backgroundColor = '#e3f2fd';
     this.searchInput.style.color = '#000000';
     this.searchInput.style.border = '1px solid #90caf9';
-    
+
     // Optional: Make it slightly transition when clicked
     this.searchInput.addEventListener('focus', () => {
       this.searchInput.style.backgroundColor = '#ffffff';
       this.searchInput.style.border = '1px solid var(--jp-brand-color1)';
     });
     this.searchInput.addEventListener('blur', () => {
-      this.searchInput.style.backgroundColor = '#e3f2fd'; 
+      this.searchInput.style.backgroundColor = '#e3f2fd';
       this.searchInput.style.border = '1px solid #90caf9';
     });
 
@@ -66,7 +70,7 @@ export class DocsSearchWidget extends Widget {
     this.resultsList.style.listStyleType = 'none';
     this.resultsList.style.padding = '0';
     this.resultsList.style.margin = '0';
-    
+
     // DROPDOWN STYLING
     this.resultsList.style.position = 'absolute';
     this.resultsList.style.top = '100%'; // Push it directly below the input
@@ -89,7 +93,7 @@ export class DocsSearchWidget extends Widget {
     });
 
     // Hide dropdown when clicking outside
-    document.addEventListener('click', (event) => {
+    document.addEventListener('click', event => {
       if (!this.node.contains(event.target as Node)) {
         this.resultsList.style.display = 'none';
       }
@@ -108,11 +112,14 @@ export class DocsSearchWidget extends Widget {
     if (this.fetchPromise) return this.fetchPromise;
 
     this.resultsList.style.display = 'block';
-    this.resultsList.innerHTML = '<li style="padding: 8px; color: var(--jp-ui-font-color2);"><em>Loading search index...</em></li>';
-    
+    this.resultsList.innerHTML =
+      '<li style="padding: 8px; color: var(--jp-ui-font-color2);"><em>Loading search index...</em></li>';
+
     this.fetchPromise = (async () => {
       try {
-        const response = await fetch('https://docs.fornax.sciencecloud.nasa.gov/myst.search.json');
+        const response = await fetch(
+          'https://docs.fornax.sciencecloud.nasa.gov/myst.search.json'
+        );
         const rawData = await response.json();
 
         if (rawData.records && Array.isArray(rawData.records)) {
@@ -129,7 +136,8 @@ export class DocsSearchWidget extends Widget {
         return true;
       } catch (error) {
         console.error('Failed to load Fornax docs search index:', error);
-        this.resultsList.innerHTML = '<li style="color: var(--jp-error-color1); padding: 8px;">Error loading search.</li>';
+        this.resultsList.innerHTML =
+          '<li style="color: var(--jp-error-color1); padding: 8px;">Error loading search.</li>';
         return false;
       } finally {
         this.fetchPromise = null;
@@ -142,7 +150,15 @@ export class DocsSearchWidget extends Widget {
   private getTitle(item: MySTSearchItem): string {
     const h = item.hierarchy;
     if (!h) return 'Documentation Page';
-    return h.lvl6 || h.lvl5 || h.lvl4 || h.lvl3 || h.lvl2 || h.lvl1 || 'Documentation Page';
+    return (
+      h.lvl6 ||
+      h.lvl5 ||
+      h.lvl4 ||
+      h.lvl3 ||
+      h.lvl2 ||
+      h.lvl1 ||
+      'Documentation Page'
+    );
   }
 
   private async handleSearch() {
@@ -157,7 +173,7 @@ export class DocsSearchWidget extends Widget {
     if (!success) return;
 
     const currentQuery = this.searchInput.value.toLowerCase();
-    
+
     if (currentQuery.trim() === '') {
       this.resultsList.style.display = 'none';
       return;
@@ -167,12 +183,15 @@ export class DocsSearchWidget extends Widget {
     const seenUrls = new Set<string>();
 
     for (const item of this.searchIndex) {
-      if (results.length >= 10) break; 
+      if (results.length >= 10) break;
 
       const titleText = this.getTitle(item).toLowerCase();
       const contentText = (item.content || '').toLowerCase();
 
-      if (titleText.includes(currentQuery) || contentText.includes(currentQuery)) {
+      if (
+        titleText.includes(currentQuery) ||
+        contentText.includes(currentQuery)
+      ) {
         if (!seenUrls.has(item.url)) {
           seenUrls.add(item.url);
           results.push(item);
@@ -226,12 +245,16 @@ export class DocsSearchWidget extends Widget {
         snippet.style.overflow = 'hidden';
         snippet.style.textOverflow = 'ellipsis';
         snippet.style.marginTop = '4px';
-        
-        const matchIndex = item.content.toLowerCase().indexOf(this.searchInput.value.toLowerCase());
+
+        const matchIndex = item.content
+          .toLowerCase()
+          .indexOf(this.searchInput.value.toLowerCase());
         const start = Math.max(0, matchIndex - 20);
-        let excerpt = item.content.substring(start, start + 60).replace(/\n/g, ' ');
+        let excerpt = item.content
+          .substring(start, start + 60)
+          .replace(/\n/g, ' ');
         if (start > 0) excerpt = '...' + excerpt;
-        
+
         snippet.textContent = excerpt;
         li.appendChild(snippet);
       }
@@ -250,12 +273,17 @@ export class DocsSearchWidget extends Widget {
           this.app.shell.activateById(this.docsWidget.id);
         } else {
           const iframe = new IFrame({
-            sandbox: ['allow-scripts', 'allow-same-origin', 'allow-popups', 'allow-forms']
+            sandbox: [
+              'allow-scripts',
+              'allow-same-origin',
+              'allow-popups',
+              'allow-forms'
+            ]
           });
           iframe.url = targetUrl;
 
           this.docsWidget = new MainAreaWidget({ content: iframe });
-          this.docsWidget.id = 'fornax-docs-viewer'; 
+          this.docsWidget.id = 'fornax-docs-viewer';
           this.docsWidget.title.label = displayTitle;
           this.docsWidget.title.closable = true;
 
