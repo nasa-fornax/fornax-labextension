@@ -2,7 +2,7 @@ import { Widget } from '@lumino/widgets';
 import { JupyterFrontEnd } from '@jupyterlab/application';
 import { IFrame, MainAreaWidget } from '@jupyterlab/apputils';
 
-interface MySTSearchItem {
+interface IMySTSearchItem {
   hierarchy?: {
     lvl1?: string;
     lvl2?: string;
@@ -20,7 +20,7 @@ export class DocsSearchWidget extends Widget {
   private searchInput: HTMLInputElement;
   private resultsList: HTMLUListElement;
 
-  private searchIndex: MySTSearchItem[] = [];
+  private searchIndex: IMySTSearchItem[] = [];
   private isIndexLoaded = false;
   private fetchPromise: Promise<boolean> | null = null;
 
@@ -147,7 +147,7 @@ export class DocsSearchWidget extends Widget {
     return this.fetchPromise;
   }
 
-  private getTitle(item: MySTSearchItem): string {
+  private getTitle(item: IMySTSearchItem): string {
     const h = item.hierarchy;
     if (!h) return 'Documentation Page';
     return (
@@ -179,7 +179,7 @@ export class DocsSearchWidget extends Widget {
       return;
     }
 
-    const results: MySTSearchItem[] = [];
+    const results: IMySTSearchItem[] = [];
     const seenUrls = new Set<string>();
 
     for (const item of this.searchIndex) {
@@ -202,7 +202,7 @@ export class DocsSearchWidget extends Widget {
     this.renderResults(results);
   }
 
-  private renderResults(results: MySTSearchItem[]) {
+  private renderResults(results: IMySTSearchItem[]) {
     this.resultsList.innerHTML = '';
     this.resultsList.style.display = 'block'; // Show dropdown
 
