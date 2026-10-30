@@ -22,6 +22,7 @@ import {
   // addUpdateNotebooksCommand
 } from './commands';
 import { removeNBKernels } from './kernels';
+import { DocsSearchWidget } from './search';
 
 // Some variables //
 const PLUGIN_ID = 'fornax-labextension:plugin';
@@ -165,6 +166,11 @@ function activateFornaxExtension(
 
   // Override the save command for read-only notebooks
   overrideSaveCommand(app, tracker);
+
+  // Add the Fornax Docs Search Widget
+  const searchWidget = new DocsSearchWidget(app);
+  // Add to the top menu bar!
+  app.shell.add(searchWidget, 'top');
 }
 
 /**
