@@ -21,13 +21,11 @@ import {
   overrideSaveCommand
   // addUpdateNotebooksCommand
 } from './commands';
-import { removeNBKernels } from './kernels';
 import { DocsSearchWidget } from './search';
 
 // Some variables //
 const PLUGIN_ID = 'fornax-labextension:plugin';
 const COMMAND_CATEGORY = 'Fornax Commands';
-const KERNEL_FILTER_PATTERN = 'py-';
 
 // Create wrappers around the keepalive commands
 // so we can add them to the Fornax-menu
@@ -133,8 +131,6 @@ function activateFornaxExtension(
 ) {
   console.log('JupyterLab extension fornax-labextension is activated!');
 
-  // remove notebook kernels; those with name: py-*
-  removeNBKernels(launcher, KERNEL_FILTER_PATTERN);
 
   // Create Navigation Commands //
   // Actual adding is done in schema/plugin.json
