@@ -4,7 +4,7 @@ export function setupLauncherDescriptions(): void {
   // next to each kernel in the launcher.
   const kernelDescriptions: { [key: string]: string } = {
     'python3*':
-      'Generic Python 3 environment with many astronomy and science packages pre-installed',
+      'Generic Python 3 environment with many astronomy and science packages pre-installed. Use this if you are unsure which environment to choose.',
     'heasoft*':
       'High Energy Astrophysics Software (HEASoft) environment for X-ray and gamma-ray astronomy. Also used for HEASARC tutorials',
     'ciao*':
