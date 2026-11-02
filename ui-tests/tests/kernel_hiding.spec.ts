@@ -9,9 +9,10 @@ test.describe('kernel hiding', () => {
 
     // Inject mock launcher cards to test the CSS rules
     await page.evaluate(() => {
-      const container = document.querySelector(
-        '.jp-Launcher-section[data-section="Notebook"] .jp-Launcher-cardContainer'
-      ) || document.querySelector('.jp-Launcher-cardContainer');
+      const container =
+        document.querySelector(
+          '.jp-Launcher-section[data-section="Notebook"] .jp-Launcher-cardContainer'
+        ) || document.querySelector('.jp-Launcher-cardContainer');
 
       if (!container) return;
 

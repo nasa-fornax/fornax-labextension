@@ -63,6 +63,7 @@ jlpm build
 ## Reporting
 
 After running tests, report:
+
 1. How many tests passed/failed
 2. Any failure details with file and test name
 3. Suggest fixes if failures are obvious

@@ -5,7 +5,9 @@ import { JSDOM } from 'jsdom';
 const cssPath = path.resolve(__dirname, '../../style/base.css');
 const css = fs.readFileSync(cssPath, 'utf8');
 
-function createLauncherDOM(cards: { category: string; title: string }[]): JSDOM {
+function createLauncherDOM(
+  cards: { category: string; title: string }[]
+): JSDOM {
   const cardHTML = cards
     .map(
       c =>
