@@ -269,9 +269,9 @@
 }
 
 /* Hide notebook kernels containing "py-" in their arguments */
-.jp-LauncherCard[data-category="Notebook"][title^="py-"] {
+.jp-LauncherCard[data-category='Notebook'][title^='py-'] {
   display: none !important;
 }
-.jp-LauncherCard[data-category="Console"][title^="py-"] {
+.jp-LauncherCard[data-category='Console'][title^='py-'] {
   display: none !important;
 }
