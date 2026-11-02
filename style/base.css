@@ -272,6 +272,7 @@
 .jp-LauncherCard[data-category='Notebook'][title^='py-'] {
   display: none !important;
 }
+
 .jp-LauncherCard[data-category='Console'][title^='py-'] {
   display: none !important;
 }
