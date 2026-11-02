@@ -276,3 +276,68 @@
 .jp-LauncherCard[data-category='Console'][title^='py-'] {
   display: none !important;
 }
+
+/* ------------------------------------------ */
+/* ------------------------------------------ */
+/* Kernel descriptions */
+
+/* 1. Ensure the label's paragraph doesn't squish our new icon */
+.jp-LauncherCard[data-category='Notebook'] .jp-LauncherCard-label p {
+  width: auto !important; /* Overrides the 100% width from main CSS */
+  flex: 1 !important; /* Takes up remaining space instead */
+}
+
+/* 2. Style the info icon container */
+.custom-kernel-info {
+  margin-left: auto !important; /* Push the icon to the far right */
+  margin-right: 16px !important; /* Pull icon away from the right edge */
+  padding-left: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--jp-ui-font-color2) !important;
+  cursor: pointer !important; /* Updated to pointer here */
+  flex-shrink: 0 !important; /* Prevent icon from squishing */
+  width: 16px !important; /* Force exact width */
+  height: 16px !important; /* Force exact height */
+  transition: color 0.2s ease;
+}
+
+/* 3. Highlight the icon when hovered so it feels interactive */
+.custom-kernel-info:hover {
+  color: var(--jp-brand-color1) !important;
+}
+
+/* ── CUSTOM CLICK TOOLTIP ──────────────────────────────────── */
+.custom-kernel-click-tooltip {
+  position: fixed !important;
+  z-index: 100000 !important; /* Ensure it stays on top of everything */
+  background-color: var(--jp-layout-color1) !important;
+  color: var(--jp-ui-font-color1) !important;
+  border: 1px solid var(--jp-border-color2) !important;
+  padding: 8px 12px !important;
+  border-radius: 4px !important;
+  font-size: var(--jp-ui-font-size1) !important;
+  box-shadow: var(--jp-elevation-z4) !important;
+  width: max-content !important;
+  max-width: 250px !important;
+  white-space: normal !important;
+  pointer-events: none !important; /* Note: Remove this line ONLY IF you want clickable <a> links inside the tooltip */
+
+  /* A smooth little fade-in animation (Updated to kebab-case) */
+  animation: tooltip-fade-in 0.15s ease-out forwards;
+}
+
+/* Updated to kebab-case */
+@keyframes tooltip-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* ------------------------------------------ */

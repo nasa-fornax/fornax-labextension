@@ -22,6 +22,7 @@ import {
   // addUpdateNotebooksCommand
 } from './commands';
 import { DocsSearchWidget } from './search';
+import { setupLauncherDescriptions } from './kernels-info';
 
 // Some variables //
 const PLUGIN_ID = 'fornax-labextension:plugin';
@@ -166,6 +167,9 @@ function activateFornaxExtension(
   const searchWidget = new DocsSearchWidget(app);
   // Add to the top menu bar!
   app.shell.add(searchWidget, 'top');
+
+  // Setup the launcher descriptions for custom kernels
+  setupLauncherDescriptions();
 }
 
 /**
