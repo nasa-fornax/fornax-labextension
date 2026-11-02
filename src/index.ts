@@ -131,7 +131,6 @@ function activateFornaxExtension(
 ) {
   console.log('JupyterLab extension fornax-labextension is activated!');
 
-
   // Create Navigation Commands //
   // Actual adding is done in schema/plugin.json
   CreateNavCommands(COMMAND_CATEGORY, palette, app);
