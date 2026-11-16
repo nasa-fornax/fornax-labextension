@@ -417,7 +417,7 @@ export function addCustomWebTabs(
     {
       id: 'fornax:web-tab-mast-schema',
       label: 'MAST schema browser',
-      url: 'https://mast.stsci.edu/schema_browser/#/',
+      url: 'https://mast.stsci.edu/schema_browser/#/?embed=FORNAX',
       launcher_category: 'Tools',
       rank: -100
     },
