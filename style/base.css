@@ -55,6 +55,7 @@
   max-height: 360px;
   overflow: hidden auto;
   gap: 0 !important;
+  scrollbar-gutter: stable;
   scrollbar-width: thin;
   scrollbar-color: var(--jp-border-color2) transparent;
 }
