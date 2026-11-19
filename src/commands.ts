@@ -464,6 +464,84 @@ export function addCustomWebTabs(
     createWebTabCommand(app, palette, launcher, category, tab);
   });
 }
+
+/**
+ * Execute registered JupyterLab commands from links using the
+ * `#fornax-command:<command-id>` URL format.
+ */
+
+// Define the exact core commands you consider 100% safe to run without a prompt
+const SAFE_CORE_COMMANDS = new Set([
+  'application:toggle-left-area',
+  'filebrowser:refresh',
+  // add other safe ones here
+]);
+
+export function addCommandLinks(app: JupyterFrontEnd): void {
+  document.addEventListener('click', event => {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    if (!(event.target instanceof Element)) {
+      return;
+    }
+
+    const link = event.target.closest<HTMLAnchorElement>('a[href]');
+    const href = link?.getAttribute('href');
+    const commandPrefix = '#fornax-command:';
+
+    if (!href?.startsWith(commandPrefix)) {
+      return;
+    }
+
+    const commandId = href.slice(commandPrefix.length);
+
+    if (!app.commands.hasCommand(commandId)) {
+      console.warn(`Command link failed: Command '${commandId}' is not registered.`);
+      return;
+    }
+
+    // Stop the default anchor jump immediately
+    event.preventDefault();
+    event.stopPropagation();
+
+    // 1 & 2: Check if the command is in our safe zones
+    const isFornaxCommand = commandId.startsWith('fornax:'); // Assuming your commands are namespaced
+    const isSafeCoreCommand = SAFE_CORE_COMMANDS.has(commandId);
+
+    if (isFornaxCommand || isSafeCoreCommand) {
+      // Safe to execute blindly
+      void app.commands.execute(commandId);
+      return;
+    }
+
+    // 3: The Fallback Prompt for "others sometimes"
+    // The command exists, but it's not explicitly whitelisted. 
+    // Ask the user for consent to prevent drive-by execution from untrusted markdown.
+    void showDialog({
+      title: 'Permission Requested',
+      body: `A link in this document is attempting to run a system command: "${commandId}". Do you want to allow this?`,
+      buttons: [
+        Dialog.cancelButton({ label: 'Cancel' }), 
+        Dialog.warnButton({ label: 'Execute Command' }) // warnButton makes it red to ensure they pay attention
+      ]
+    }).then(result => {
+      if (result.button.accept) {
+        void app.commands.execute(commandId);
+      } else {
+        console.log(`User denied execution of command: ${commandId}`);
+      }
+    });
+  });
+}
 // --------------------------------------------------- //
 
 /**

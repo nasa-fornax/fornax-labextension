@@ -5,7 +5,8 @@ import { LabIcon } from '@jupyterlab/ui-components';
 import {
   addLauncherItems,
   CreateNavCommand,
-  INavCommandOptions
+  INavCommandOptions,
+  addCommandLinks
 } from '../commands';
 
 // Mock showDialog from @jupyterlab/apputils
@@ -216,6 +217,32 @@ describe('Fornax Commands', () => {
         expect(window.open).not.toHaveBeenCalled();
         expect(window.location.href).toBe('initial-page.html'); // Should remain unchanged
       });
+    });
+  });
+
+  describe('addCommandLinks', () => {
+    it('executes a registered command from a fornax-command link', () => {
+      const execute = jest.fn();
+      const hasCommand = jest.fn().mockReturnValue(true);
+      const app = {
+        commands: { execute, hasCommand }
+      } as unknown as JupyterFrontEnd;
+      const link = document.createElement('a');
+      link.href = '#fornax-command:fornax:web-tab-fornax-docs';
+      document.body.appendChild(link);
+
+      addCommandLinks(app);
+      const click = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        button: 0
+      });
+      link.dispatchEvent(click);
+
+      expect(hasCommand).toHaveBeenCalledWith('fornax:web-tab-fornax-docs');
+      expect(execute).toHaveBeenCalledWith('fornax:web-tab-fornax-docs');
+      expect(click.defaultPrevented).toBe(true);
+      document.body.replaceChildren();
     });
   });
 });

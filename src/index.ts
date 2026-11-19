@@ -18,6 +18,7 @@ import {
   addFilesLinksCommands,
   addLauncherStyles,
   addCustomWebTabs,
+  addCommandLinks,
   overrideSaveCommand
   // addUpdateNotebooksCommand
 } from './commands';
@@ -145,6 +146,9 @@ function activateFornaxExtension(
 
   // Add all custom Web Tabs to the palette and launcher
   addCustomWebTabs(app, palette, launcher, COMMAND_CATEGORY);
+
+  // Allow links to defined commands
+  addCommandLinks(app);
 
   // Add Fornax Launcher items //
   addLauncherItems(launcher);
