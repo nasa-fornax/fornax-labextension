@@ -473,7 +473,7 @@ export function addCustomWebTabs(
 // Define the exact core commands you consider 100% safe to run without a prompt
 const SAFE_CORE_COMMANDS = new Set([
   'application:toggle-left-area',
-  'filebrowser:refresh',
+  'filebrowser:refresh'
   // add other safe ones here
 ]);
 
@@ -505,7 +505,9 @@ export function addCommandLinks(app: JupyterFrontEnd): void {
     const commandId = href.slice(commandPrefix.length);
 
     if (!app.commands.hasCommand(commandId)) {
-      console.warn(`Command link failed: Command '${commandId}' is not registered.`);
+      console.warn(
+        `Command link failed: Command '${commandId}' is not registered.`
+      );
       return;
     }
 
@@ -524,13 +526,13 @@ export function addCommandLinks(app: JupyterFrontEnd): void {
     }
 
     // 3: The Fallback Prompt for "others sometimes"
-    // The command exists, but it's not explicitly whitelisted. 
+    // The command exists, but it's not explicitly whitelisted.
     // Ask the user for consent to prevent drive-by execution from untrusted markdown.
     void showDialog({
       title: 'Permission Requested',
       body: `A link in this document is attempting to run a system command: "${commandId}". Do you want to allow this?`,
       buttons: [
-        Dialog.cancelButton({ label: 'Cancel' }), 
+        Dialog.cancelButton({ label: 'Cancel' }),
         Dialog.warnButton({ label: 'Execute Command' }) // warnButton makes it red to ensure they pay attention
       ]
     }).then(result => {
