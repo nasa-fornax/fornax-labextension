@@ -3,6 +3,8 @@
 # 0.1.29
 - Update the mast schema url to enable tracking.
 - Fix scrollbar overlapping with the info icon.
+- Enable commands to be run from custom urls.
+- Move rendered docs and notebooks from Resources to Fornax category.
 
 # 0.1.28
 - Add kernel description icons

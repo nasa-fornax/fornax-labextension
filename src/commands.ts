@@ -154,11 +154,11 @@ export function addLauncherItems(launcher: ILauncher) {
     category: 'Fornax',
     rank: -1001
   });
-  launcher.add({
-    command: 'fornax:gh-docs',
-    category: 'Fornax',
-    rank: -1000
-  });
+  // launcher.add({
+  //   command: 'fornax:gh-docs',
+  //   category: 'Fornax',
+  //   rank: -1000
+  // });
   launcher.add({
     command: 'fornax:discourse',
     category: 'Fornax',
@@ -233,7 +233,7 @@ export function addFilesLinksCommands(
     },
     {
       commandId: 'fornax:introduction',
-      label: 'Tutorials',
+      label: 'Tutorial Notebooks',
       filePath: 'fornax-notebooks/introduction.mdv',
       remoteUrl:
         'https://github.com/nasa-fornax/fornax-images/blob/main/introduction.md'
@@ -425,35 +425,35 @@ export function addCustomWebTabs(
       id: 'fornax:web-tab-fornax-docs',
       label: 'Fornax Documentation',
       url: 'https://docs.fornax.sciencecloud.nasa.gov/',
-      launcher_category: 'Resources',
+      launcher_category: 'Fornax',
       rank: -200
     },
     {
       id: 'fornax:web-tab-fornax-nb',
-      label: 'Fornax Demo Notebooks (Rendered)',
+      label: 'Demo Notebooks (Rendered)',
       url: 'https://nasa-fornax.github.io/fornax-demo-notebooks/',
-      launcher_category: 'Resources',
+      launcher_category: 'Fornax',
       rank: -199
     },
     {
       id: 'fornax:web-tab-irsa-nb',
       label: 'IRSA Tutorials (Rendered)',
       url: 'https://caltech-ipac.github.io/irsa-tutorials/',
-      launcher_category: 'Resources',
+      launcher_category: 'Fornax',
       rank: -198
     },
     {
       id: 'fornax:web-tab-heasarc-nb',
       label: 'HEASARC Tutorials (Rendered)',
       url: 'https://heasarc.github.io/heasarc-tutorials/',
-      launcher_category: 'Resources',
+      launcher_category: 'Fornax',
       rank: -197
     },
     {
       id: 'fornax:web-tab-mast-nb',
       label: 'MAST Tutorials (Rendered)',
       url: 'https://spacetelescope.github.io/mast_notebooks/intro.html',
-      launcher_category: 'Resources',
+      launcher_category: 'Fornax',
       rank: -196
     }
     // Just add more objects here as needed!
