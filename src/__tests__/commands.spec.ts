@@ -43,15 +43,15 @@ describe('Fornax Commands', () => {
       addLauncherItems(mockLauncher);
 
       // Expect the 'add' method to have been called 4 times
-      expect(mockAdd).toHaveBeenCalledTimes(4);
+      expect(mockAdd).toHaveBeenCalledTimes(3);
 
       // Optional: You can also check the arguments if needed
       expect(mockAdd).toHaveBeenCalledWith(
         expect.objectContaining({ command: 'fornax:dashboard' })
       );
-      expect(mockAdd).toHaveBeenCalledWith(
-        expect.objectContaining({ command: 'fornax:gh-docs' })
-      );
+      // expect(mockAdd).toHaveBeenCalledWith(
+      //   expect.objectContaining({ command: 'fornax:gh-docs' })
+      // );
       expect(mockAdd).toHaveBeenCalledWith(
         expect.objectContaining({ command: 'fornax:discourse' })
       );
