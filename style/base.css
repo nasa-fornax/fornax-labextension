@@ -60,7 +60,6 @@
   scrollbar-color: var(--jp-border-color2) transparent;
 }
 
-
 .jp-Launcher-cardContainer::-webkit-scrollbar-track {
   background: transparent;
 }
