@@ -60,9 +60,6 @@
   scrollbar-color: var(--jp-border-color2) transparent;
 }
 
-.jp-Launcher-cardContainer::-webkit-scrollbar {
-  width: 4px;
-}
 
 .jp-Launcher-cardContainer::-webkit-scrollbar-track {
   background: transparent;
@@ -79,7 +76,9 @@
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
-  width: 100% !important;
+  width: auto !important;
+  align-self: stretch !important;
+  box-sizing: border-box !important;
   min-width: unset !important;
   max-width: unset !important;
   height: 28px !important;
@@ -291,7 +290,6 @@
 /* 2. Style the info icon container */
 .custom-kernel-info {
   margin-left: auto !important; /* Push the icon to the far right */
-  margin-right: 16px !important; /* Pull icon away from the right edge */
   padding-left: 8px !important;
   display: flex !important;
   align-items: center !important;

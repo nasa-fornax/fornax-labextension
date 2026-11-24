@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.1.30
+
+- Another fix for the info icon styling.
+
 # 0.1.29
 
 - Update the mast schema url to enable tracking.
