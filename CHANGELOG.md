@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.1.31
+
+- Fix the vscode icon that disappeared when moving it under Tools.
+
 # 0.1.30
 
 - Another fix for the info icon styling.

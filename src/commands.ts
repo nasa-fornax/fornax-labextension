@@ -168,11 +168,29 @@ export function addLauncherItems(launcher: ILauncher) {
 
 /*
 Add Launcher styles. Ensures the order from css is used
+Also fix the vs code icon that was removed when it is moved from
+Notebook to the Tools section (Done by patching jupyter_vscode_proxy/__init__.py).
 Input:
   - app: JupyterFrontEnd
 */
 export function addLauncherStyles(app: JupyterFrontEnd) {
   app.restored.then(() => {
+    const addVscodeIcon = (): void => {
+      document
+        .querySelectorAll(".jp-LauncherCard[title^='VS Code']")
+        .forEach(card => {
+          const icon = card.querySelector('.jp-LauncherCard-icon');
+          if (icon && !icon.querySelector('.fornax-vscode-icon')) {
+            const image = document.createElement('img');
+            image.className = 'jp-Launcher-kernelIcon fornax-vscode-icon';
+            image.src = `${PageConfig.getBaseUrl()}server-proxy/icon/vscode`;
+            image.alt = 'VS Code';
+            icon.querySelector('.jp-Icon-cover')?.remove();
+            icon.append(image);
+          }
+        });
+    };
+
     const tagSections = (): void => {
       document.querySelectorAll('.jp-Launcher-sectionTitle').forEach(title => {
         const section = title.closest('.jp-Launcher-section');
@@ -180,6 +198,8 @@ export function addLauncherStyles(app: JupyterFrontEnd) {
           section.setAttribute('data-section', title.textContent.trim());
         }
       });
+
+      addVscodeIcon();
     };
 
     // Tag on load
@@ -196,6 +216,8 @@ export function addLauncherStyles(app: JupyterFrontEnd) {
       );
       if (launcherAffected) {
         tagSections();
+      } else {
+        addVscodeIcon();
       }
     });
 
